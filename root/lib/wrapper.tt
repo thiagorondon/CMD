@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Para onde foi o meu dinheiro ?</title>
+<script src="http://code.jquery.com/jquery-1.5.1.min.js" /></script>
+<link href="/static/css/style.css" rel="stylesheet" type="text/css"/>
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+<script src="/static/js/underscore-min.js"></script>
+<script src="/static/js/backbone-min.js"></script>
+<script src="/static/js/utils.js"></script>
+<script src="/static/js/script.js"></script>
+
+<link href="/static/css/data_tables.css" rel="stylesheet" type="text/css"/>
+
+<script src="/static/js/jquery.dataTables.min.js"></script>
+<script src="/static/js/datatables.js"></script>
+<script src="/static/js/jquery.number_format.js"></script>
+<script src="/static/js/jquery.tablesorter.min.js"></script>
+<!--[if IE]><script language="javascript" type="text/javascript" src="/static/js/excanvas.js"></script><![endif]--> 
+<script src="/static/js/thejit-2.js"></script>
+<script src="/static/js/jitload.js"></script>
+
+</head>
+<script type="text/javascript">
+
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-22934746-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+
+</script>
+
+<body>
+
+
+<div id="logo">
+<Table cellpading="0" cellspacing="0" width="100%"><tr><td>
+<a href="/"><img src="/static/images/logo-pofomd.png" border="0"></a>
+</td>
+<td align="right" style="vertical-align: bottom;">
+<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+</td>
+<td align="right" style="vertical-align: bottom;">
+	<iframe src="http://www.facebook.com/plugins/like.php?href&amp;send=false&amp;layout=button_count&amp;width=85&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=tahoma&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:85px; height:21px;" allowTransparency="true"></iframe>
+</td>
+<td align="right" class="yearselect">
+<label for="ayear">Qual ano?</label>
+<select name="year" id="year" onchange="javascript:changeYear();">
+[% FOREACH item IN ['2010', '2009'] %]
+        <option value="[% item %]" [% IF item == year %]SELECTED[% END %]>[% item %]
+[% END %]
+</select>
+</td></tr></table>
+
+</div>
+
+<div id="nav">
+[% content %]
+</div>
+
+<div id="footer">
+<table width="100%"><tr><td>
+Criado por <a href="http://www.opendatabr.org/">OpenData-BR</a>.
+</td><td>
+<a href="http://www.opendefinition.org/okd/"> 
+          <img src="http://assets.okfn.org/images/ok_buttons/od_80x15_blue.png" alt="Open Data" /> 
+	          </a>
+</td><td align="right">
+<A href="/faq">faq</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/contato">contato</a>
+</td></tr></table>
+
+</div>
+
+
+</body>
+</html>

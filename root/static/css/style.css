@@ -1,0 +1,192 @@
+
+body {
+	margin: 0;
+	padding: 0;
+}
+body, tr, td{
+	background-color: #d6cfc2;
+	font-family: "Lucida Grande", Tahoma, Arial;
+	font-size: 10pt;
+}
+
+a, a:visited{
+	color: #996600;
+	text-decoration: none;
+}
+
+a:hover{
+	color: #000;
+	text-decoration: underline;
+}
+
+
+#treemap { 
+width: auto;
+height: 336px;
+}
+
+#slider { margin: 10px; }
+
+#intro {
+font-family: "Lucida Grande", Tahoma;
+font-size: 10px;
+font-weight: lighter;
+font-variant: normal;
+text-transform: uppercase;
+color: #666666;
+margin-top: 10px;
+text-align: center!important;
+letter-spacing: 0.3em;
+padding: 20px 20px;
+}
+
+#beta {
+font-family: "Lucida Grande", Tahoma;
+font-size: 10px;
+font-weight: lighter;
+font-variant: normal;
+text-transform: uppercase;
+font-weight: bold;
+color: #000000;
+margin-top: 10px;
+text-align: center!important;
+letter-spacing: 0.3em;
+padding: 20px 20px;
+}
+
+#logo{
+	margin: auto;
+	width: 980px;
+	padding: 10px 10px;
+}
+
+#quadroimposto {
+	margin: auto;
+	width: 550px;
+	padding 10px 10px;
+	text-align: center;
+}
+#quadroimposto input#amount{
+	text-align: center;
+	font-size: 12pt;
+}
+
+#footer{
+	margin: auto;
+	width: 980px;
+	padding: 10px 10px;
+}
+
+#footer table tr td{
+	color: #6d6860;
+	font-size: 9pt;
+}
+
+#nav{
+	background-color: #fff;
+	margin: auto;
+	width: 980px;
+	padding: 0px 10px;
+    	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+#legenda {
+width: 380px;
+float: left;
+font-family: "Lucida Grande", Tahoma;
+font-size: 8pt;
+color: #666666;
+padding:0px 10px;
+}
+
+#totais {
+width: 560px;
+float: left;
+text-align: right;
+font-family: "Lucida Grande", Tahoma;
+font-size: 8pt;
+color: #666666;
+padding:0px 10px;
+}
+
+#mainvis {
+	position: relative;
+	overflow: hidden;
+    cursor: pointer;
+	color: #fff;
+	font-size: 0.8em;
+	font-weight: bold;
+}
+#mainvis div.desc {
+    padding: 0.8em;
+	font-weight: normal;
+    overflow: hidden;
+}
+#mainvis h2 {
+    font-family: Graublau, Georgia, serif;
+	font-size: 1.6em;
+	color: #fff;
+	font-weight: normal;
+	margin-bottom: 0.1em;
+}
+#_tooltip {
+	background-color: #DDE7F0;
+	padding: 4px 6px;
+	border: 1px solid #A3B3C7;
+}
+
+
+#datalist
+{
+font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+width:100%;
+border-collapse:collapse;
+}
+#datalist td, #datalist th 
+{
+font-size:1.0em;
+border:1px solid #98bf21;
+padding:3px 7px 2px 7px;
+}
+#datalist th 
+{
+font-size:1.0em;
+text-align:center;
+padding-top:5px;
+padding-bottom:4px;
+background-color:#A7C942;
+color:#fff;
+}
+#datalist tr.alt td 
+{
+color:#000;
+background-color:#EAF2D3;
+}
+
+td.yearselect{
+	color: #996600;
+	font-weight: bolder;
+}
+table.tablesorter thead tr .header {
+	cursor: pointer;
+}
+table.tablesorter th {
+	padding: 5px;
+}
+table.tablesorter .even {
+	background-color: #3D3D3D;
+}
+table.tablesorter .odd {
+	background-color: #6E6E6E;
+}
+table.tablesorter .headerSortUp {
+	background-image: url(asc.gif);
+	background-repeat: no-repeat;
+	background-position: 2px 15px;
+}
+table.tablesorter .headerSortDown {
+	background-image: url(desc.gif);
+	background-repeat: no-repeat;
+	background-position: 2px 13px;
+}
