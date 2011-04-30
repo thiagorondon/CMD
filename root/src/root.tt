@@ -1,4 +1,4 @@
-<script src="/static/js/functions.js"></script>
+<script src="/static/js/functions.js" type="text/javascript"></script>
 <script>
 [% IF node %]
 getNode([% year %],[% node %]);
