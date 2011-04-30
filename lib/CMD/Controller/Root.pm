@@ -56,7 +56,6 @@ sub todo : Chained('base') Args(0) {
 
 sub collection : Chained('base') CaptureArgs(1) {
     my ( $self, $c, $year ) = @_;
-    $c->stash->{current_model} = $year;
     my $rs = $c->model( $year . '::Recurso' );
 
     $c->detach unless $rs;
@@ -73,6 +72,7 @@ sub collection : Chained('base') CaptureArgs(1) {
         collection       => $rs,
         year             => $year,
         total_collection => $total,
+        current_model    => $year
     );
 }
 
@@ -99,6 +99,18 @@ sub node : Chained('base') Args(2) {
     );
 }
 
+sub prog : Chained('base') Args(2) {
+    my ( $self, $c, $year, $prog ) = @_;
+    my $rs = $c->model( $year . '::Recurso' );
+    my $collection = $rs->find( { id => $prog } ) or $c->detach('/');
+    $c->stash(
+        year          => $year,
+        prog          => $prog,
+        collection    => $collection,
+        current_model => $year,
+    );
+}
+
 sub handle_TREE : Private {
     my ( $self, $c ) = @_;
 
@@ -113,6 +125,7 @@ sub handle_TREE : Private {
     delete $c->stash->{year};
     delete $c->stash->{total_collection};
 
+    my @levels;
     my @children;
     my @bgcolor         = bgcolor;
     my $bgcolor_default = '#c51d18';    # in config file ?
@@ -130,14 +143,16 @@ sub handle_TREE : Private {
 
         # Make tree for openspending javascript.
         map {
-            my $item = $_;
-
+            my $item              = $_;
             my $valor_usuario     = $item->valor * $imposto / $total_collection;
             my $valor_porcentagem = $item->valor * 100 / $total;
             my $color             = shift(@bgcolor) || $bgcolor_default;
-            my $link              = join( '/', '/node', $year, $item->id );
             my $valor_print       = formata_valor( $item->valor );
             my $porcentagem       = formata_float( $valor_porcentagem, 3 );
+            my $zone              = int( $item->children ) ? '/node' : '/prog';
+            my $link              = join( '/', $zone, $year, $item->id );
+
+            push( @levels, $item->level ) unless grep ( $item->level, @levels );
 
             # Fix content with 'repasse' in db. Fix DB ?
             my $title =
@@ -158,9 +173,12 @@ sub handle_TREE : Private {
                         valor_usuario   => formata_real( $valor_usuario, 4 ),
                         valor_tabela    => formata_real( $item->valor ),
 
-                        ( $item->children ) ? ( link => $link )
-                        : (),
-                        ( $valor_porcentagem > 3 ) ? ( show_title => 'true' )
+                        ( int( $item->children ) )
+                        ? ( link => $link )
+                        : ( link => '#' ),
+
+                        ( $valor_porcentagem > 3 )
+                        ? ( show_title => 'true' )
                         : (),
 
                     },
@@ -176,6 +194,7 @@ sub handle_TREE : Private {
 
     # here, we go.
     $c->stash->{children} = [@children];
+    $c->stash->{levels}   = [@levels];
     $c->forward('View::JSON');
 }
 
