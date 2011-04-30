@@ -51,6 +51,9 @@ sub faq : Chained('base') Args(0) {
 sub contato : Chained('base') Args(0) {
 }
 
+sub todo : Chained('base') Args(0) {
+}
+
 sub collection : Chained('base') CaptureArgs(1) {
     my ( $self, $c, $year ) = @_;
     $c->stash->{current_model} = $year;
@@ -139,7 +142,7 @@ sub handle_TREE : Private {
             # Fix content with 'repasse' in db. Fix DB ?
             my $title =
               $item->content eq 'repasse'
-              ? 'Repasse para governo e mun&iacute;cipios'
+              ? 'Repasse para estados e mun&iacute;cipios'
               : $item->content;
 
             push(
