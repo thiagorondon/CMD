@@ -1,0 +1,33 @@
+
+<h1>TODO</h1>
+
+<ul>
+<li> Quadro com informações sobre o treemap atual. (Explicação, onde eu estou?, ...)</li>
+<li> Explicações mais detalhadas no FAQ sobre gastos baseado em transferencia e diretas.</li>
+<li> Utilizar o Dataflow para transformar os dados.</li>
+<li> Melhorar a codificação HTML.</li>
+<li> Tornar os scripts js minificados.</li>
+<li> Página institucional sobre o site.</li>
+<li> Mostrar documentos oficiais relacionados ao programa do "quadrado".</li>
+<li> Informar o valor total dos programas, além do parcial</li>
+<li> Armazenar informações de código das funções, subfunções e programas no banco de dados</li>
+<li> Página dedicada ao programa, com informações totais e mapa do brasil com informações do destino da verba por região.</li>
+<li> Comparação entre anos nas tabelas visuais.</li>
+<li> Mudar o nome "função" dependendo do level da página atual na árvore.</li>
+<li> Disponibilizar sistema de comentários nas páginas dos programas.</li>
+<li> Blog ? Para explicar implementações novas ?</li>
+<li> Rank dos programas mais caros/distribuidos/e etc por função e geral.</li>
+<li> Rank das capitais</li>
+<li> Rank dos municipios</li>
+</ul>
+
+<br/><br/>
+<p>
+Se tiver mais alguma sugestão, envie para a lista de desenvolvedores:
+</p>
+
+<p>
+<a href="http://groups.google.com/group/opendata-br?pli=1">http://groups.google.com/group/opendata-br?pli=1</a>
+</p>
+
+<br/><br/>
