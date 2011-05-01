@@ -110,6 +110,17 @@ color: #666666;
 padding:0px 10px;
 }
 
+#prog_total{
+border: 1px solid #ccc;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+padding: 5px;
+width: 500px;
+font-size: 12pt;
+text-align: center;
+}
+
+
 #mainvis {
 	position: relative;
 	overflow: hidden;

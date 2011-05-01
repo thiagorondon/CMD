@@ -32,7 +32,7 @@ function showData(data,rdata,url,year) {
 	
 	var items = [];
 
-	items.push('<table id="datalist" class="tablesorter" width="95%" align="center"><thead><tr><th>Fun&ccedil;&atilde;o</th><th>Total de gastos</th><th>Quanto você gastou ?</th><th>Porcentagem nesta vis&atilde;o</th></tr></thead><tbody>');
+	items.push('<table id="datalist" class="tablesorter" width="95%" align="center"><thead><tr><th>Descri&ccedil;&atilde;o</th><th>Total de gastos</th><th>Quanto você gastou ?</th><th>Porcentagem nesta vis&atilde;o</th></tr></thead><tbody>');
 	$.each(rdata.children, function(key, val) {
 		items.push('<tr class="alt"><td width="320">' + '<a href="/node/' + year + '/' + val.id + '">' + val.data.title + '</a></td><td align="right">R$ ' + val.data.valor_tabela + '</td><td align="right">R$ ' + val.data.valor_usuario + '</td><td align="right" width="200">' + val.data.porcentagem + '%</td></tr>');
 	});

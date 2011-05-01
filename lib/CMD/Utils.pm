@@ -56,6 +56,7 @@ sub formata_real {
     $j =~ s/(?<!\.\d)(?<=\d)(?=(?:\d\d\d)+\b)/\./g;
     $i ||= '00';
     $i .= '0' if length($i) == 1;
+    $j = '0' unless $j;
     return "$j,$i";
 }
 

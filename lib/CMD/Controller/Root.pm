@@ -29,6 +29,8 @@ The root page (/)
 =cut
 
 sub base : Chained('/') PathPart('') CaptureArgs(0) {
+    my ( $self, $c ) = @_;
+    $c->stash->{current_model} = 'DB';
 }
 
 sub root : Chained('base') PathPart('') Args(0) {
@@ -56,37 +58,37 @@ sub todo : Chained('base') Args(0) {
 
 sub collection : Chained('base') CaptureArgs(1) {
     my ( $self, $c, $year ) = @_;
-    my $rs = $c->model( $year . '::Recurso' );
+    my $rs = $c->model( 'DB::Node' );
 
     $c->detach unless $rs;
-    my $tree = $rs->find( { content => $year } );
-
+    my $obj = $rs->search( { content => $year } )->first;
+    my $tree = $rs->search({ parent_id => $obj->id });
     my $total = 0;
     map {
         $total += $_->valor
           if looks_like_number( $_->valor )
               and $_->content ne 'total'
-    } $tree->children;
+    } $tree->all;
 
     $c->stash(
         collection       => $rs,
         year             => $year,
         total_collection => $total,
-        current_model    => $year
     );
 }
 
 sub collection_root : Chained('collection') PathPart('root') Args(0) {
     my ( $self, $c ) = @_;
     my $rs = $c->stash->{collection};
-    $c->stash->{tree} = $rs->find( { content => $c->stash->{year} } );
+    my $obj = $rs->search( { content => $c->stash->{year} } )->first;
+    $c->stash->{tree} = $rs->search( { parent_id => $obj->id } );
     $c->forward('handle_TREE');
 }
 
 sub collection_node : Chained('collection') PathPart('node') Args(1) {
     my ( $self, $c, $id ) = @_;
     my $rs = $c->stash->{collection};
-    $c->stash->{tree} = $rs->find( { id => $id } );
+    $c->stash->{tree} = $rs->search( { parent_id => $id } );
     $c->forward('handle_TREE');
 }
 
@@ -100,14 +102,46 @@ sub node : Chained('base') Args(2) {
 }
 
 sub prog : Chained('base') Args(2) {
-    my ( $self, $c, $year, $prog ) = @_;
-    my $rs = $c->model( $year . '::Recurso' );
-    my $collection = $rs->find( { id => $prog } ) or $c->detach('/');
+    my ( $self, $c,  $year, $id ) = @_;
+    my $rs = $c->model( 'DBUTF8::Node');
+    my $collection = $rs->find( $id ) or $c->detach('/');
+
+    my $total = $rs->search_rs({ codigo => $collection->codigo })
+        ->get_column('valor')->sum;
+
+    my $total_direto = $rs->search_rs({ codigo => $collection->codigo, 
+        estado => undef })->get_column('valor')->sum;
+
+    my $total_repasse = $rs->search_rs({ codigo => $collection->codigo,
+        estado => { '!=', undef }})->get_column('valor')->sum;
+
+    my $objs = $rs->search({ codigo => $collection->codigo,
+        estado => { '!=', undef }});
+    my %estado;
+
+    foreach my $item ($objs->all) {
+        next unless $item->valor or $item->estado;
+        if ( grep(keys %estado, $item->estado) ) {
+            $estado{$item->estado} += $item->valor;
+        } else {
+            $estado{$item->estado} = $item->valor;
+        }
+    }
+    my @estados;
+    foreach my $item (keys %estado) {
+        push(@estados, { nome => $item, total => $estado{$item}, total_print => formata_real($estado{$item}) } );
+    }
+
     $c->stash(
-        year          => $year,
-        prog          => $prog,
+        year        => $year,
+        id          => $id,
         collection    => $collection,
-        current_model => $year,
+        total => formata_real($total),
+        total_direto => formata_real($total_direto),
+        total_repasse => formata_real($total_repasse),
+        raw_total_direto => $total_direto,
+        raw_total_repasse => $total_repasse,
+        estados => [ @estados ],
     );
 }
 
@@ -138,7 +172,7 @@ sub handle_TREE : Private {
             $total += $_->valor
               if looks_like_number( $_->valor )
                   and $_->content ne 'total'
-        } $tree->children;
+        } $tree->all;
         $c->stash->{total_tree} = formata_real( $total, 2 );
 
         # Make tree for openspending javascript.
@@ -149,10 +183,10 @@ sub handle_TREE : Private {
             my $color             = shift(@bgcolor) || $bgcolor_default;
             my $valor_print       = formata_valor( $item->valor );
             my $porcentagem       = formata_float( $valor_porcentagem, 3 );
-            my $zone              = int( $item->children ) ? '/node' : '/prog';
+            my $zone              = $item->children->count ? '/node' : '/prog';
             my $link              = join( '/', $zone, $year, $item->id );
 
-            push( @levels, $item->level ) unless grep ( $item->level, @levels );
+            #push( @levels, $item->level ) unless grep ( $item->level, @levels );
 
             # Fix content with 'repasse' in db. Fix DB ?
             my $title =
@@ -172,10 +206,7 @@ sub handle_TREE : Private {
                         porcentagem     => $porcentagem,
                         valor_usuario   => formata_real( $valor_usuario, 4 ),
                         valor_tabela    => formata_real( $item->valor ),
-
-                        ( int( $item->children ) )
-                        ? ( link => $link )
-                        : ( link => '#' ),
+                        link => $link ,
 
                         ( $valor_porcentagem > 3 )
                         ? ( show_title => 'true' )
@@ -189,12 +220,12 @@ sub handle_TREE : Private {
                 }
               )
               if $item->valor
-        } $tree->children;
+        } $tree->all;
     }
 
     # here, we go.
     $c->stash->{children} = [@children];
-    $c->stash->{levels}   = [@levels];
+    #$c->stash->{levels}   = [@levels];
     $c->forward('View::JSON');
 }
 
