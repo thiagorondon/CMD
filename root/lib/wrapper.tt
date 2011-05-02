@@ -64,7 +64,7 @@ _gaq.push(['_trackPageview']);
 <a href="/"><img src="/static/images/logo-pofomd.png" border="0" /></a>
 </td>
 <td align="right" style="vertical-align: bottom;">
-<a href="http://twitter.com/share" class="twitter-share-button" url="http://www.paraondefoiomeudinheiro.com.br/" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 </td>
 <td align="right" style="vertical-align: bottom;">
 	<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.paraondefoimeudinheiro.com.br&amp;send=false&amp;layout=button_count&amp;width=85&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=tahoma&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:85px; height:21px;" allowTransparency="true"></iframe>

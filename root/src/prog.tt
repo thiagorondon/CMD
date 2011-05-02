@@ -45,8 +45,26 @@ Valor total do programa: <b>R$ [% total %]</b>
 		var data = [ [% raw_total_direto %], [% raw_total_repasse %]];
 		var pie = new RGraph.Pie('pie1', data);
 		pie.Set('chart.labels', ['Diretos', 'Transferências' ]);
+		pie.Set('chart.tooltips', ['Diretos', 'Transferências' ]);
+		pie.Set('chart.tooltips.effect', 'fade');
+		pie.Set('chart.tooltips.event', 'onmousemove');
+		pie.Set('chart.highlight.style', '3d');
+		pie.Set('chart.labels.sticks', true);
+		pie.Set('chart.variant', 'donut');
 		pie.Set('chart.linewidth', 5);
-		pie.Set('chart.stroke', '#fff');
+		pie.Set('chart.gutter', 30);
+		pie.Set('chart.strokestyle', 'white');
+ 		pie.Set('chart.key.shadow', false);
+        	pie.Set('chart.shadow', false);
+
+		if (!RGraph.isIE8()) {
+			pie.Set('chart.zoom.hdir', 'center');
+			pie.Set('chart.zoom.vdir', 'up');
+			pie.Set('chart.labels.sticks', true);
+		       	pie.Set('chart.labels.sticks.color', '#aaa');
+
+		}
+
 		pie.Draw();
 
 	        data = [ [% FOREACH item IN estados %][% item.total %],[%END %]];
