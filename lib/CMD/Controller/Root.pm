@@ -106,16 +106,21 @@ sub prog : Chained('base') Args(2) {
     my $rs = $c->model( 'DBUTF8::Node');
     my $collection = $rs->find( $id ) or $c->detach('/');
 
-    my $total = $rs->search_rs({ codigo => $collection->codigo })
+    my $total = $rs->search_rs({ codigo => $collection->codigo,
+        funcao => $collection->funcao, subfuncao => $collection->subfuncao,
+    })
         ->get_column('valor')->sum;
 
     my $total_direto = $rs->search_rs({ codigo => $collection->codigo, 
+        funcao => $collection->funcao, subfuncao => $collection->subfuncao,
         estado => undef })->get_column('valor')->sum;
 
     my $total_repasse = $rs->search_rs({ codigo => $collection->codigo,
+        funcao => $collection->funcao, subfuncao => $collection->subfuncao,
         estado => { '!=', undef }})->get_column('valor')->sum;
 
     my $objs = $rs->search({ codigo => $collection->codigo,
+        funcao => $collection->funcao, subfuncao => $collection->subfuncao,
         estado => { '!=', undef }});
     my %estado;
 
@@ -129,7 +134,9 @@ sub prog : Chained('base') Args(2) {
     }
     my @estados;
     foreach my $item (keys %estado) {
-        push(@estados, { nome => $item, total => $estado{$item}, total_print => formata_real($estado{$item}) } );
+        my $ufname = $item;
+        #$ufname =~ s/([\w']+)/\u\L$1/g;
+        push(@estados, { nome => $ufname, total => $estado{$item}, total_print => formata_real($estado{$item}) } );
     }
 
     $c->stash(
@@ -139,8 +146,8 @@ sub prog : Chained('base') Args(2) {
         total => formata_real($total),
         total_direto => formata_real($total_direto),
         total_repasse => formata_real($total_repasse),
-        raw_total_direto => $total_direto,
-        raw_total_repasse => $total_repasse,
+        raw_total_direto => $total_direto || 0,
+        raw_total_repasse => $total_repasse || 0,
         estados => [ @estados ],
     );
 }
@@ -193,6 +200,7 @@ sub handle_TREE : Private {
               $item->content eq 'repasse'
               ? 'Repasse para estados e mun&iacute;cipios'
               : $item->content;
+            #$title =~ s/([\w']+)/\u\L$1/g;
 
             push(
                 @children,
