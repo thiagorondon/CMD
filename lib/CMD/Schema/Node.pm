@@ -21,7 +21,8 @@ __PACKAGE__->add_columns(
     subfuncao    => { data_type         => 'varchar' },
     estado       => { data_type         => 'varchar', is_nullable => 1 },
     codmunicipio => { data_type         => 'varchar', is_nullable => 1 },
-    municipio    => { data_type         => 'varchar', is_nullable => 1 }
+    municipio    => { data_type         => 'varchar', is_nullable => 1 },
+    year         => { data_type         => 'int' },
 );
 
 __PACKAGE__->set_primary_key('node_id');

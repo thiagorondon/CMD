@@ -108,20 +108,29 @@ sub prog : Chained('base') Args(2) {
 
     my $total = $rs->search_rs({ codigo => $collection->codigo,
         funcao => $collection->funcao, subfuncao => $collection->subfuncao,
+        year => $year
     })
         ->get_column('valor')->sum;
 
     my $total_direto = $rs->search_rs({ codigo => $collection->codigo, 
         funcao => $collection->funcao, subfuncao => $collection->subfuncao,
-        estado => undef })->get_column('valor')->sum;
+        estado => undef,
+        year => $year
+        })->get_column('valor')->sum;
 
     my $total_repasse = $rs->search_rs({ codigo => $collection->codigo,
         funcao => $collection->funcao, subfuncao => $collection->subfuncao,
-        estado => { '!=', undef }})->get_column('valor')->sum;
+        estado => { '!=', undef },
+        year => $year
+        },
+        
+        )->get_column('valor')->sum;
 
     my $objs = $rs->search({ codigo => $collection->codigo,
         funcao => $collection->funcao, subfuncao => $collection->subfuncao,
-        estado => { '!=', undef }});
+        estado => { '!=' => undef },
+        year => $year
+        });
     my %estado;
 
     foreach my $item ($objs->all) {
@@ -135,8 +144,13 @@ sub prog : Chained('base') Args(2) {
     my @estados;
     foreach my $item (keys %estado) {
         my $ufname = $item;
+        my $pc = $estado{$item} * 100 / $total; 
+        $pc = formata_float($pc, 2);
         #$ufname =~ s/([\w']+)/\u\L$1/g;
-        push(@estados, { nome => $ufname, total => $estado{$item}, total_print => formata_real($estado{$item}) } );
+        push(@estados, { 
+            nome => $ufname . " ($pc\%)", 
+            total => $estado{$item}, 
+            total_print => formata_real($estado{$item}) } );
     }
 
     $c->stash(

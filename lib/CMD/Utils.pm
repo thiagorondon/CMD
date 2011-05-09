@@ -44,6 +44,8 @@ sub formata_float {
 # this is not real.
 sub formata_real {
     my ( $valor, $ndec, $virgula ) = @_;
+    $ndec ||= 2;
+
     my ( $j, $i );
     if ($virgula) {
         ( $j, $i ) = split( /\,/, $valor );
