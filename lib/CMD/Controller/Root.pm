@@ -182,10 +182,18 @@ sub handle_TREE : Private {
 
     my @levels;
     my @children;
+    my @zones;
     my @bgcolor         = bgcolor;
     my $bgcolor_default = '#c51d18';    # in config file ?
 
     if ($tree) {
+        # zones
+        my $point = $tree->first;
+        while ($point) { 
+            my @parent = $point->parents();
+            push(@zones, $parent[0]->content) if scalar @parent;
+            $point = $point->parent;
+        }
 
         # % by zone.
         my $total = 0;
@@ -246,6 +254,10 @@ sub handle_TREE : Private {
     }
 
     # here, we go.
+    @zones = reverse(@zones);
+    shift(@zones);
+    $c->stash->{zones} = join(', ', @zones) if @zones;
+    warn $c->stash->{zones};
     $c->stash->{children} = [@children];
     #$c->stash->{levels}   = [@levels];
     $c->forward('View::JSON');

@@ -18,7 +18,14 @@ function geturljson(url,year) {
 		if (rdata.children != ""){
 			showData(data,rdata,url,year);
 			$('.total').html("Total: R$ " + rdata.total_tree);
-		}else{
+			if (rdata.zones != undefined) {
+				$('.intro').html("<p>" + rdata.zones + "</p>");
+			} else {
+				$('.intro').html("<p>Esta disposição é baseada na lei de diretrizes orçamentarias e os dados são do portal da transparência, no qual estão apenas os investimentos realizados pelo governo federal. </p>");
+			}
+		}
+		
+		else{
 			document.location.href = "/year/" + rdata.current_model;
 		}
 	});

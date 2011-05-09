@@ -7,10 +7,7 @@ getYear([% year %]);
 [% END %]
 </script>
 
-<div id="intro">
-<p>
-Esta disposição é baseada na lei de diretrizes orçamentarias e os dados são do portal da transparência, no qual estão apenas os investimentos realizados pelo governo federal.
-</p>
+<div id="intro" class="intro">
 </div>
 
 [% IF node %]
