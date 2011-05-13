@@ -19,6 +19,8 @@
 <!--[if IE 8]><script src="/static/js/rgraph/excanvas/excanvas.compressed.js"></script><![endif]-->
 <script src="/static/js/rgraph/libraries/RGraph.rose.js" ></script>
 <script src="/static/js/rgraph/libraries/RGraph.hbar.js" ></script>
+<script src="/static/js/rgraph/libraries/RGraph.line.js" ></script>
+
 
 [% ELSE %]
 

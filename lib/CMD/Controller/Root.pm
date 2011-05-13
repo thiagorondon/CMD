@@ -106,6 +106,14 @@ sub prog : Chained('base') Args(2) {
     my $rs = $c->model( 'DBUTF8::Node');
     my $collection = $rs->find( $id ) or $c->detach('/');
 
+    my %yyout;
+    foreach my $yy (2006 .. 2010) {
+        $yyout{$yy} =
+        $rs->search_rs({ codigo => $collection->codigo,
+        funcao => $collection->funcao, subfuncao => $collection->subfuncao,
+        year => $yy })->get_column('valor')->sum;
+    }
+
     my $total = $rs->search_rs({ codigo => $collection->codigo,
         funcao => $collection->funcao, subfuncao => $collection->subfuncao,
         year => $year
@@ -163,6 +171,7 @@ sub prog : Chained('base') Args(2) {
         raw_total_direto => $total_direto || 0,
         raw_total_repasse => $total_repasse || 0,
         estados => [ @estados ],
+        yyout => \%yyout
     );
 }
 

@@ -90,6 +90,37 @@ Valor total do programa: <b>R$ [% total %]</b>
 		pie.Set('chart.gutter', size);
 
 		pie.Draw();
+
+
+		[% IF yyout %]
+
+		var pie = new RGraph.Line("line", [[% IF yyout.2006 ; yyout.2006 ; END %],[% IF yyout.2007 ; yyout.2007 ; END %],[% IF yyout.2008 ; yyout.2008 ; END %],[% IF yyout.2009 ; yyout.2009 ; END %],[% IF yyout.2010 ; yyout.2010 ; END %]]);
+		pie.Set('chart.background.barcolor1', 'rgba(255,255,255,1)');
+		pie.Set('chart.background.barcolor2', 'rgba(255,255,255,1)');
+		pie.Set('chart.background.grid.color', 'rgba(238,238,238,1)');
+		pie.Set('chart.colors', ['rgba(255,0,0,1)']);
+		pie.Set('chart.linewidth', 2);
+		pie.Set('chart.hmargin', 5);
+		pie.Set('chart.labels', [[% IF yyout.2006 %]'2006'[% END %],[% IF yyout.2007 %]'2007'[% END %],[% IF yyout.2008 %]'2008'[% END %],[% IF yyout.2009 %]'2009'[% END %],[% IF yyout.2010 %]'2010'[% END %]]);
+		pie.Set('chart.gutter', 40);
+		pie.Set('chart.background.grid.autofit', true);
+		pie.Set('chart.background.grid.autofit.align', true);
+		pie.Set('chart.key.shadow', true);
+		pie.Set('chart.key.shadow.offsetx', 0);
+		pie.Set('chart.key.shadow.offsety', 0);
+		pie.Set('chart.key.shadow.blur', 15);
+		pie.Set('chart.key.shadow.color', '#ddd');
+		pie.Set('chart.width', '450');
+		pie.Set('chart.background.grid', true);
+		pie.Set('chart.yaxispos', 'right');
+		pie.Set('chart.units.pre', 'R$ ');
+		pie.Set('chart.scale.thousand', '.');
+		pie.Set('chart.scale.point', ',');
+		pie.Draw();
+
+
+		[% END %]
+
 	}
 
 </script>
@@ -108,6 +139,15 @@ Transferências para estados e municipios: <b> R$ [% total_repasse %] </b>
 </center>
 
 <br/>
+
+[% IF yyout AND raw_total_repasse %]
+<h2>Evolução do investimento</h2>
+
+<center>
+<canvas id="line" width="820" height="400">[No canvas support]</canvas>
+</center>
+
+[% END %]
 
 
 <h2>Mais informações</h2>
