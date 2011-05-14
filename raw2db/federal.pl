@@ -12,7 +12,7 @@ use Data::Dumper;
 my $total_test = 0;
 my $schema = CMD::Schema->connect( "dbi:mysql:db=cmd_beta", "root", "aviao" );
 my $rs = $schema->resultset('Node');
-my $year = 2006;
+my $year;
 
 &main;
 
@@ -24,10 +24,16 @@ sub check_file {
 
 sub main {
 
-    my $fh   = &check_file( $ARGV[0] );
+    if (!$ARGV[2]) {
+        print "Use: ./script.pl ano diretas.csv transferencia.csv\n";
+        exit 0;
+    }
+
+    $year = $ARGV[0];
+    my $fh   = &check_file( $ARGV[1] );
     my %tree = &process_data($fh);
 
-    $fh   = &check_file( $ARGV[1] );
+    $fh   = &check_file( $ARGV[2] );
     %tree = &process_data_transferencia( $fh, \%tree );
     %tree = &proccess_values(%tree);
 
