@@ -30,8 +30,8 @@ __PACKAGE__->set_primary_key('node_id');
 __PACKAGE__->parent_column('parent_id');
 __PACKAGE__->repair_tree(1);
 
-__PACKAGE__->belongs_to( bases_nodes => 'CMD::Schema::BaseNode' =>
-      { 'foreign.node_id' => 'self.node_id' } );
+#__PACKAGE__->belongs_to( bases_nodes => 'CMD::Schema::BaseNode' =>
+#      { 'foreign.node_id' => 'self.node_id' } );
 
 =head1 AUTHOR
 
