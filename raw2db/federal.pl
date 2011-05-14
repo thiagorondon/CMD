@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Scalar::Util qw(looks_like_number);
 use FindBin qw($Bin);
-use lib "../CMD/lib";
+use lib "../lib";
 use CMD::Schema;
 use Data::Dumper;
 
