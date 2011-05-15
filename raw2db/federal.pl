@@ -13,6 +13,7 @@ use Data::Dumper;
 
 my $schema = CMD::Schema->connect( "dbi:mysql:db=cmd", "cmd", "aviao" );
 my $rs = $schema->resultset('Node');
+my $rs_cidade = $schema->resultset('Cidade');
 my $year;
 
 &main;
@@ -38,12 +39,17 @@ sub main {
     
     my $migrate = CMD::Data::Migrate->new(
         rs => $rs,
+        rs_cidade => $rs_cidade,
         year => $year
     );
     
     %tree = $migrate->proccess_values(%tree);
 
-    my $root = $rs->create( { content => $year, valor => 0 } );
+    $rs_cidade->update_or_create({
+        codigo => 0,
+    });
+
+    my $root = $rs->create( { content => $year, valor => 0, cidade_codigo => 0 } );
     $migrate->hash_to_db( $root, \%tree );
 }
 

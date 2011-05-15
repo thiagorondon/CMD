@@ -20,12 +20,15 @@ __PACKAGE__->add_columns(
     funcao    => { data_type         => 'varchar' },
     subfuncao => { data_type         => 'varchar' },
     cidade_codigo => { data_type => 'integer' },
-
+    # TODO: Estado in a new table ?
+    estado => { data_type => 'varchar', is_nullable => 1 },
     # TODO: tt_ini/tt_fim
     ano => { data_type => 'int' },
 );
 
 __PACKAGE__->set_primary_key('node_id');
+
+# FIX: Now, we need to comment this two lines to deploy.
 __PACKAGE__->parent_column('parent_id');
 __PACKAGE__->repair_tree(1);
 

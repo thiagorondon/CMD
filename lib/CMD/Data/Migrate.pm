@@ -6,18 +6,24 @@ use Moose;
 use Scalar::Util qw(looks_like_number);
 
 has rs => (
-    is => 'rw',
-    isa => 'Object',
+    is        => 'rw',
+    isa       => 'Object',
     predicate => 'has_rs'
 );
 
+has rs_cidade => (
+    is  => 'rw',
+    isa => 'Object',
+    predicate => 'has_rs_cidade'
+);
+
 has year => (
-    is => 'rw',
+    is  => 'rw',
     isa => 'Int'
 );
 
 sub hash_to_db () {
-    my ($self, $root, $treeref) = @_;
+    my ( $self, $root, $treeref ) = @_;
     my %tree = %$treeref;
 
     die 'need to set rs' unless $self->has_rs;
@@ -28,25 +34,34 @@ sub hash_to_db () {
         next if $item eq 'NomeFuncao';    # Hm ?
         if ( ref($valor) eq 'HASH' ) {
             my $total = $tree{$item}{total} || 0;
-            my $node = $self->rs->create( { content => $item, valor => $total, parent_id => $root->id }, year => $self->year );
+            my $node = $self->rs->create(
+                { content => $item, valor => $total, parent_id => $root->id },
+                ano => $self->year, cidade_codigo => 0 );
             $self->hash_to_db( $node, $valor );
         }
         else {
             my ( $valor_parcial, $codigo, $subfuncao, $funcao, $estado,
                 $codmunicipio, $municipio )
               = split( '-', $valor );
+
+
+            $self->rs_cidade->update_or_create({
+                codigo => $codmunicipio,
+                nome => $municipio,
+                estado => $estado
+            }) if $codmunicipio;
+
             my $node = $self->rs->create(
                 {
-                    content      => $item,
-                    valor        => $valor,
-                    codigo       => $codigo,
-                    subfuncao    => $subfuncao,
-                    funcao       => $funcao,
+                    content       => $item,
+                    valor         => $valor,
+                    codigo        => $codigo,
+                    subfuncao     => $subfuncao,
+                    funcao        => $funcao,
+                    cidade_codigo => $codmunicipio || 0,
                     estado       => $estado,
-                    codmunicipio => $codmunicipio,
-                    municipio    => $municipio,
-                    parent_id   => $root->id,
-                    year => $self->year
+                    parent_id     => $root->id,
+                    ano           => $self->year
                 }
             );
         }
@@ -55,16 +70,13 @@ sub hash_to_db () {
 }
 
 sub proccess_values {
-    my ($self, %tree) = (@_);
+    my ( $self, %tree ) = (@_);
     my $total = 0;
 
     # Funções
     foreach my $i ( keys %tree ) {
         my $funcao       = $tree{$i};
         my $total_funcao = 0;
-        #print "$i\n";
-        #next unless $i eq 'Educação';
-
 
         # Sub-funções
         foreach my $j ( keys %{$funcao} ) {
@@ -74,9 +86,10 @@ sub proccess_values {
             # Programas
             foreach my $k ( keys %{$subfuncao} ) {
                 my $investimento = $tree{$i}{$j}{$k};
-                
-                ($investimento) = split( '-', $tree{$i}{$j}{$k} ) unless ref($investimento) eq 'HASH';
-                
+
+                ($investimento) = split( '-', $tree{$i}{$j}{$k} )
+                  unless ref($investimento) eq 'HASH';
+
                 # Repasse
                 if ( ref($investimento) eq 'HASH' ) {
                     my $total_repasse = 0;
@@ -97,7 +110,8 @@ sub proccess_values {
                                   split( '-', $tree{$i}{$j}{$k}{$l}{$m}{$n} );
                                 $total_repasse_municipio += $inv_mun
                                   if looks_like_number($inv_mun);
-                                print "$inv_mun\n" unless looks_like_number($inv_mun);
+                                print "$inv_mun\n"
+                                  unless looks_like_number($inv_mun);
                             }
                             $total_repasse_estado += $total_repasse_municipio;
                             $tree{$i}{$j}{$k}{$l}{$m}{total} =
@@ -112,15 +126,9 @@ sub proccess_values {
                     $total_subfuncao += $total_repasse;
                 }
 
-                #if ($k eq 'Brasil Escolarizado') {
-                #    $total_test += $investimento;
-                #}
-
                 $total_subfuncao += $investimento
                   if looks_like_number($investimento);
-                #print "i:$investimento\n" unless looks_like_number($investimento);
- 
-            
+
             }
 
             $tree{$i}{$j}{total} = $total_subfuncao;
