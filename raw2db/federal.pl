@@ -10,7 +10,7 @@ use CMD::Schema;
 use Data::Dumper;
 
 my $total_test = 0;
-my $schema = CMD::Schema->connect( "dbi:mysql:db=cmd_beta", "root", "aviao" );
+my $schema = CMD::Schema->connect( "dbi:mysql:db=cmd", "cmd", "aviao" );
 my $rs = $schema->resultset('Node');
 my $year;
 
