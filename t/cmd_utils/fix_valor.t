@@ -3,7 +3,7 @@ use warnings;
 use Test::More;
 use Test::More;
 
-use CMD::Migrate::Utils qw(fix_valor);
+use CMD::Utils qw(fix_valor);
 
 my $valor = '1,23';
 is(fix_valor($valor), 1.23);

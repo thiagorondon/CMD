@@ -2,11 +2,12 @@
 package CMD::Utils;
 
 use strict;
+no warnings; # qw/#/;
 use vars qw(@ISA @EXPORT_OK $VERSION @EXPORT_FAIL);
 require Exporter;
 
 @ISA       = qw(Exporter);
-@EXPORT_OK = qw(formata_valor formata_float formata_real bgcolor);
+@EXPORT_OK = qw(formata_valor formata_float formata_real bgcolor fix_valor);
 
 $VERSION = '0.01';
 $VERSION = eval $VERSION;
@@ -94,6 +95,15 @@ sub bgcolor {
       #380035
       #000037
       #2f2b87/;
+}
+
+sub fix_valor {
+    my $v = shift;
+    $v =~ s/\,/\./;
+    $v =~ s/\'//g;
+    $v =~ s/\n//;
+    $v =~ s/\r//;
+    return $v;
 }
 
 1;
