@@ -20,8 +20,11 @@ __PACKAGE__->add_columns(
     funcao    => { data_type         => 'varchar' },
     subfuncao => { data_type         => 'varchar' },
     cidade_codigo => { data_type => 'integer' },
+    credor_codigo => { data_type => 'varchar' },
+
     # TODO: Estado in a new table ?
     estado => { data_type => 'varchar', is_nullable => 1 },
+
     # TODO: tt_ini/tt_fim
     ano => { data_type => 'int' },
 );
@@ -37,6 +40,9 @@ __PACKAGE__->repair_tree(1);
 
 __PACKAGE__->belongs_to( cidade => 'CMD::Schema::Cidade' =>
       { 'foreign.codigo' => 'self.cidade_codigo' } );
+
+__PACKAGE__->belongs_to( credor => 'CMD::Schema::Credor' =>
+      { 'foreign.codigo' => 'self.credor_codigo' } );
 
 =head1 AUTHOR
 
