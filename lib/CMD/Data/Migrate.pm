@@ -29,7 +29,7 @@ sub hash_to_db () {
         if ( ref($valor) eq 'HASH' ) {
             my $total = $tree{$item}{total} || 0;
             my $node = $self->rs->create( { content => $item, valor => $total, parent_id => $root->id }, year => $self->year );
-            &hash_to_db( $node, $valor );
+            $self->hash_to_db( $node, $valor );
         }
         else {
             my ( $valor_parcial, $codigo, $subfuncao, $funcao, $estado,
