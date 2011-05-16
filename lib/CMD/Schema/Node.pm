@@ -20,7 +20,7 @@ __PACKAGE__->add_columns(
     funcao    => { data_type         => 'varchar' },
     subfuncao => { data_type         => 'varchar' },
     cidade_codigo => { data_type => 'integer' },
-    credor_codigo => { data_type => 'varchar' },
+    #credor_codigo => { data_type => 'varchar' },
 
     # TODO: Estado in a new table ?
     estado => { data_type => 'varchar', is_nullable => 1 },
@@ -35,14 +35,14 @@ __PACKAGE__->set_primary_key('node_id');
 __PACKAGE__->parent_column('parent_id');
 __PACKAGE__->repair_tree(1);
 
-#__PACKAGE__->belongs_to( bases_nodes => 'CMD::Schema::BaseNode' =>
-#      { 'foreign.node_id' => 'self.node_id' } );
+__PACKAGE__->belongs_to( bases_nodes => 'CMD::Schema::BaseNode' =>
+      { 'foreign.node_id' => 'self.node_id' } );
 
 __PACKAGE__->belongs_to( cidade => 'CMD::Schema::Cidade' =>
       { 'foreign.codigo' => 'self.cidade_codigo' } );
 
-__PACKAGE__->belongs_to( credor => 'CMD::Schema::Credor' =>
-      { 'foreign.codigo' => 'self.credor_codigo' } );
+#__PACKAGE__->belongs_to( credor => 'CMD::Schema::Credor' =>
+#      { 'foreign.codigo' => 'self.credor_codigo' } );
 
 =head1 AUTHOR
 
