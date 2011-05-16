@@ -1,13 +1,9 @@
 var imposto = 1000;
 var last_year = 2010;
-function getNode(year,id) {
-	var url = '/collection/' + year + '/node/' + id + '?imposto=' + imposto;
-	geturljson(url,year);
-}
 
-function getYear(year) {
-	var url = '/collection/' + year + '/root?imposto=' + imposto;
-	geturljson(url,year);
+function getNode(id) {
+	var url = '/data/node/' + id;
+	geturljson(url);
 }
 
 function geturljson(url,year) {
