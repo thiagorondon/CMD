@@ -1,0 +1,39 @@
+<script src="/static/js/functions.js" type="text/javascript"></script>
+<script>
+getNode([% node %]);
+</script>
+
+<div id="intro" class="intro">
+</div>
+
+[% IF node %]
+<p><a href="javascript:history.go(-1)">Voltar para página anterior</a></p>
+[% END %]
+<div id="mainvis" style="width: auto; height: 400px;"> </div>
+<div id="legenda">Tri = Trilhões, Bi = Bilhões, Mi = Milhões</div>
+<div id="totais"><div class="total"></div></div>
+
+<br clear="all"/>
+
+<div id="beta">
+<p>
+<b>Esta é uma versão beta, e ainda estamos trabalhando com a melhoria dos dados e a sincronização deles com o portal da transparência.</b>
+</p>
+</div>
+
+<div id="quadroimposto">
+<p>
+<label for="amount">Quanto de imposto federal você pagou ? (de R$ 1.000,00 até R$ 1.000.000,00)</label>
+<input type="text" id="amount" value="R$ 1.000,00" style="border:0; color:#f6931f; font-weight:bold;" />
+</p>
+
+<div id="imposto"></div>
+
+<br/><br/>
+</div>
+
+<div class="my-new-list"></div>
+
+<br/>
+
+
