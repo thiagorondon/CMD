@@ -60,6 +60,12 @@ padding: 20px 20px;
 	padding: 10px 10px;
 }
 
+#logoroot{
+	margin: auto;
+	width: 500px;
+	padding: 10px 10px;
+}
+
 #quadroimposto {
 	margin: auto;
 	width: 550px;
@@ -82,10 +88,36 @@ padding: 20px 20px;
 	font-size: 9pt;
 }
 
+#introbox table tr td{
+	background-color: #6d6860;
+	font-size: 12pt;
+	color: #fff;
+}
+
+#introbox{
+	background-color: #6d6860;
+	margin: auto;
+	width: 350px;
+	padding: 0px 10px;
+	font-size: 14pt;
+    	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+
 #nav{
 	background-color: #fff;
 	margin: auto;
 	width: 980px;
+	padding: 0px 10px;
+    	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+#navroot {
+	background-color: #fff;
+	margin: auto;
+	width: 500px;
 	padding: 0px 10px;
     	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
