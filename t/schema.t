@@ -30,7 +30,7 @@ ok($rs_base->find(1));
 
 $rs_basenode->create({ node_id => 1, base_id => 1 });
 
-ok($rs_basenode->search({ node_id => 1, base_id => 1 });
+ok($rs_basenode->search({ node_id => 1, base_id => 1 }));
 
 done_testing();
 
