@@ -23,6 +23,8 @@ requires 'Config::General'; # This should reflect the config file format you've 
                  # See Catalyst::Plugin::ConfigLoader for supported formats
 test_requires 'Test::More' => '0.88';
 test_requires 'Test::JSON';
+test_requires 'DBICx::TestDatabase';
+
 tests 't/*.t t/*/*.t';
 catalyst;
 

@@ -3,6 +3,7 @@ use Moose;
 use namespace::autoclean;
 use Scalar::Util qw(looks_like_number);
 use CMD::Utils qw(formata_real formata_valor formata_float bgcolor);
+use CMD::Data::Utils qw(get_root_by_nodeid);
 
 BEGIN { extends 'Catalyst::Controller' }
 
@@ -52,6 +53,8 @@ sub todo : Chained('base') Args(0) {
 sub node : Chained('base') Args(1) {
     my ( $self, $c, $node ) = @_;
     $c->stash->{node} = $node;
+    $c->stash->{objnode} = $c->model('DB::Node')->find($node);
+    $c->stash->{rootnode} = my $root = get_root_by_nodeid($c->stash->{objnode});
     $c->stash->{bases} = $c->model('DB::Base');
 }
 

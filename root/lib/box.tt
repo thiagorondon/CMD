@@ -1,11 +1,27 @@
+
+<script type="text/javascript">
+$(document).ready(function() {
+        var url = '/data/node2base/[% node %]';
+	var base_id = '';        
+	$.getJSON(url, function(ret) {                
+		data = ret.data;
+		base_id = data.base_id;
+		if (base_id) {
+			url = '/data/base2nodes/' + base_id;
+			populate_periodo(url, '[% rootnode.content %]');
+		}
+	});
+});
+</script>
+
 <div id="introbox">
 <table width="80%"><tr><td>
-Base: 
+Base:
 </td><td>
 <select name="base" id="base" onchange="javascript:base2nodes();">
 <option value=""></option>
 [% FOREACH item IN bases.all %]
-<option value="[% item.id %]">[% item.nome %]</option>
+<option value="[% item.id %]" [% IF item.id == rootnode.bases_nodes.base.id %]SELECTED[% END %]>[% item.nome %]</option>
 [% END %]
 </select>
 </td></tr>

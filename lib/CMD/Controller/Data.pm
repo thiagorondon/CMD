@@ -3,6 +3,7 @@ use Moose;
 use namespace::autoclean;
 use Scalar::Util qw(looks_like_number);
 use CMD::Utils qw(formata_real formata_valor formata_float bgcolor);
+use CMD::Data::Utils qw(get_root_by_nodeid);
 BEGIN { extends 'Catalyst::Controller' }
 
 sub base : Chained('/base') PathPart('data') CaptureArgs(0) {
@@ -20,6 +21,16 @@ sub base2nodes : Chained('base') Args(1) {
     $c->stash->{data} = [@data];
     $c->forward('View::JSON');
 }
+
+sub node2base : Chained('base') Args(1) {
+    my ( $self, $c, $node ) = @_;
+    my $sc = $c->model('DB::Node')->find( { node_id => $node } );
+    my $root = get_root_by_nodeid($sc);
+    my $obj = $c->model('DB::BaseNode')->search( { node_id => $root->id } )->first;
+    $c->stash->{data} = { base_id => $obj->base_id } if $obj;
+    $c->forward('View::JSON');
+}
+
 
 sub node : Chained('base') Args(1) {
     my ( $self, $c, $id ) = @_;
