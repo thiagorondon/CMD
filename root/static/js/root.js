@@ -10,9 +10,7 @@ function redirect2node() {
 	}
 }
 
-function base2nodes() {
-        var url = '/data/base2nodes/' + $('#base').val();
-	$('#periodo').hide();	
+function populate_periodo(url) {
 	$.getJSON(url, function(ret) {
 		data = ret.data;
 		var options = '<option value=""></option>';
@@ -21,6 +19,14 @@ function base2nodes() {
 		}
 		$("select#node").html(options);
 	});
-	$('#periodo').show();
+}
+
+function base2nodes() {
+        if ($('#base').val()) {
+		var url = '/data/base2nodes/' + $('#base').val();
+		$('#periodo').hide();
+		populate_periodo(url);
+		$('#periodo').show();
+	}
 }
 

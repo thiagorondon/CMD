@@ -64,25 +64,25 @@ sub programa : Chained('base') Args(1) {
         $yyout{$yy} =
         $rs->search_rs({ codigo => $collection->codigo,
         funcao => $collection->funcao, subfuncao => $collection->subfuncao,
-        year => $yy })->get_column('valor')->sum;
+        ano => $yy })->get_column('valor')->sum;
     }
 
     my $total = $rs->search_rs({ codigo => $collection->codigo,
         funcao => $collection->funcao, subfuncao => $collection->subfuncao,
-        year => $tt
+        ano => $tt
     })
         ->get_column('valor')->sum;
 
     my $total_direto = $rs->search_rs({ codigo => $collection->codigo, 
         funcao => $collection->funcao, subfuncao => $collection->subfuncao,
         estado => undef,
-        year => $tt
+        ano => $tt
         })->get_column('valor')->sum;
 
     my $total_repasse = $rs->search_rs({ codigo => $collection->codigo,
         funcao => $collection->funcao, subfuncao => $collection->subfuncao,
         estado => { '!=', undef },
-        year => $tt
+        ano => $tt
         },
         
         )->get_column('valor')->sum;
@@ -90,7 +90,7 @@ sub programa : Chained('base') Args(1) {
     my $objs = $rs->search({ codigo => $collection->codigo,
         funcao => $collection->funcao, subfuncao => $collection->subfuncao,
         estado => { '!=' => undef },
-        year => $tt
+        ano => $tt
         });
     my %estado;
 
@@ -122,6 +122,7 @@ sub programa : Chained('base') Args(1) {
         total_repasse => formata_real($total_repasse),
         raw_total_direto => $total_direto || 0,
         raw_total_repasse => $total_repasse || 0,
+        raw_total => $total || 0,
         estados => [ @estados ],
         yyout => \%yyout
     );

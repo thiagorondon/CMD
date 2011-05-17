@@ -38,7 +38,6 @@ sub node : Chained('base') Args(1) {
 sub handle_TREE : Private {
     my ( $self, $c ) = @_;
 
-    my $imposto          = $c->req->query_parameters->{imposto} || 1000;
     my $tree             = $c->stash->{tree};
     my $tt               = $c->stash->{tt};
     my $total_collection = $c->stash->{total_collection};
@@ -77,7 +76,6 @@ sub handle_TREE : Private {
         # Make tree for openspending javascript.
         map {
             my $item              = $_;
-            my $valor_usuario     = $item->valor * $imposto / $total_collection;
             my $valor_porcentagem = $item->valor * 100 / $total;
             my $color             = shift(@bgcolor) || $bgcolor_default;
             my $valor_print       = formata_valor( $item->valor );
@@ -104,7 +102,6 @@ sub handle_TREE : Private {
                         value           => $porcentagem,
                         printable_value => $valor_print,
                         porcentagem     => $porcentagem,
-                        valor_usuario   => formata_real( $valor_usuario, 4 ),
                         valor_tabela    => formata_real( $item->valor ),
                         link            => $link,
 

@@ -1,4 +1,3 @@
-var imposto = 1000;
 var last_year = 2010;
 
 function getNode(id) {
@@ -35,9 +34,9 @@ function showData(data,rdata,url,year) {
 	
 	var items = [];
 
-	items.push('<table id="datalist" class="tablesorter" width="95%" align="center"><thead><tr><th>Descri&ccedil;&atilde;o</th><th>Total de gastos</th><th>Quanto você gastou ?</th><th>Porcentagem nesta vis&atilde;o</th></tr></thead><tbody>');
+	items.push('<table id="datalist" class="tablesorter" width="95%" align="center"><thead><tr><th>Descri&ccedil;&atilde;o</th><th>Total de gastos</th><th>Porcentagem nesta vis&atilde;o</th></tr></thead><tbody>');
 	$.each(rdata.children, function(key, val) {
-		items.push('<tr class="alt"><td width="320">' + '<a href="#">' + val.data.title + '</a></td><td align="right">R$ ' + val.data.valor_tabela + '</td><td align="right">R$ ' + val.data.valor_usuario + '</td><td align="right" width="200">' + val.data.porcentagem + '%</td></tr>');
+		items.push('<tr class="alt"><td width="320">' + '<a href="#">' + val.data.title + '</a></td><td align="right">R$ ' + val.data.valor_tabela + '</td><td align="right">' + val.data.porcentagem + '%</td></tr>');
 	});
 	items.push('</tbody></table>');
 
@@ -67,27 +66,6 @@ function showData(data,rdata,url,year) {
 	$("#datalist").tablesorter();
 
 }
-$(document).ready(function() {
-        $("#imposto").slider ( {
-		value: 1000,
-		min: 1000,
-		max: 1000000,
-		step: 1000,
-		slide: function( event, ui ) {
-			var formated_value = $().number_format(ui.value, {
-			numberOfDecimals:2,
-			decimalSeparator: ',',
-			thousandSeparator: '.',
-			symbol: 'R$'});
- 			$( "#amount" ).val( formated_value );
-			imposto = ui.value;
-		},
-		change: function( event, ui ) {
-			getYear(last_year);
-		}
-	});
-
-});
 
 function changeYear() {
 	var url = '/year/' + $('#year').val();

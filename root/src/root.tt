@@ -11,6 +11,7 @@
 Base: 
 </td><td>
 <select name="base" id="base" onchange="javascript:base2nodes();">
+<option value=""></option>
 [% FOREACH item IN bases.all %]
 <option value="[% item.id %]">[% item.nome %]</option>
 [% END %]
@@ -33,7 +34,7 @@ Periodo:
 
 <br/><br/>
 
-Faça um tour pelo site!
+Nós ajude a construir este site! Entre em <a href="/contato">contato</a> conosco!
 
 <br/><br/>
 
