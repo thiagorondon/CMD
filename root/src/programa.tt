@@ -1,0 +1,176 @@
+
+
+[% META programa=1 %]
+
+<br/>
+<h1>[% collection.content %]</h1>
+
+<br/><br/>
+
+[% IF raw_total %]
+
+<center>
+<div id="prog_total">
+Valor total do programa: <b>R$ [% total %]</b>
+</div>
+</center>
+
+<br/>
+
+<br/>
+[% IF raw_total_repasse %]
+
+<h2>Transferências por estado</h2>
+
+<p>Abaixo a relação dos estados que receberam dinheiro para este programa de governo, e a quantidade.</p>
+<center>
+<canvas id="pie2" width="820" height="700">[No canvas support]</canvas>
+</center>
+
+</td></tr></table>
+
+[% END %]
+
+<script type="text/javascript">
+
+    window.onload = function ()
+        {
+		var data = [ [% raw_total_direto %], [% raw_total_repasse %]];
+		var pie = new RGraph.Pie('pie1', data);
+		pie.Set('chart.labels', ['Diretos', 'Transferências' ]);
+		pie.Set('chart.tooltips', ['Diretos', 'Transferências' ]);
+		pie.Set('chart.tooltips.effect', 'fade');
+		pie.Set('chart.tooltips.event', 'onmousemove');
+		pie.Set('chart.highlight.style', '3d');
+		pie.Set('chart.labels.sticks', true);
+		pie.Set('chart.linewidth', 5);
+		pie.Set('chart.gutter', 30);
+		pie.Set('chart.strokestyle', 'white');
+ 		pie.Set('chart.key.shadow', false);
+        	pie.Set('chart.shadow', false);
+
+		if (!RGraph.isIE8()) {
+			pie.Set('chart.zoom.hdir', 'center');
+			pie.Set('chart.zoom.vdir', 'up');
+			pie.Set('chart.labels.sticks', true);
+		       	pie.Set('chart.labels.sticks.color', '#aaa');
+		}
+
+		pie.Draw();
+
+		var grad = pie.context.createLinearGradient(0,0,450,0);
+    		grad.addColorStop(0, 'white');
+		grad.addColorStop(1, 'red');
+
+	        data = [ [% FOREACH item IN estados %][% item.total %],[%END %]];
+		pie = new RGraph.HBar('pie2', data);
+		pie.Set('chart.labels', [ [% FOREACH item IN estados %]'[% item.nome %]',[% END %] ]);
+		pie.Set('chart.title.xaxis', 'Recursos');
+		pie.Set('chart.title.yaxis', 'Estados');
+		pie.Set('chart.colors', [grad]);
+		pie.Set('chart.strokestyle', 'rgba(0,0,0,0)');
+		pie.Set('chart.units.pre', 'R$ ');
+		pie.Set('chart.units.post', ',00');
+		pie.Set('chart.background.barcolor1', 'white');
+		pie.Set('chart.background.barcolor2', 'white');
+		pie.Set('chart.background.grid.autofit', true);
+		pie.Set('chart.vmargin', 2);
+		pie.Set('chart.text.style', '#333');
+		pie.Set('chart.xlabels', false);
+		pie.Set('chart.scale.thousand', '.');
+
+		 if (!RGraph.isIE8()) {
+		 	pie.Set('chart.zoom.vdir', 'center');
+			pie.Set('chart.contextmenu', [['Get PNG', RGraph.showPNG], ['Zoom in', RGraph.Zoom], ['Clear', function () {RGraph.Clear(pie.canvas); pie.Draw();}]]);
+		}
+
+		pie.Set('chart.grouping', 'grouped');
+		pie.Set('chart.gutter', 20);
+		pie.Set('chart.labels.above', true);
+		
+		var size = RGraph.getGutterSuggest(pie, pie.data) + 5;
+		pie.Set('chart.gutter', size);
+
+		pie.Draw();
+
+
+		[% IF yyout %]
+
+		var pie = new RGraph.Line("line", [[% IF yyout.2006 ; yyout.2006 ; END %],[% IF yyout.2007 ; yyout.2007 ; END %],[% IF yyout.2008 ; yyout.2008 ; END %],[% IF yyout.2009 ; yyout.2009 ; END %],[% IF yyout.2010 ; yyout.2010 ; END %]]);
+		pie.Set('chart.background.barcolor1', 'rgba(255,255,255,1)');
+		pie.Set('chart.background.barcolor2', 'rgba(255,255,255,1)');
+		pie.Set('chart.background.grid.color', 'rgba(238,238,238,1)');
+		pie.Set('chart.colors', ['rgba(255,0,0,1)']);
+		pie.Set('chart.linewidth', 2);
+		pie.Set('chart.hmargin', 5);
+		pie.Set('chart.labels', [[% IF yyout.2006 %]'2006'[% END %],[% IF yyout.2007 %]'2007'[% END %],[% IF yyout.2008 %]'2008'[% END %],[% IF yyout.2009 %]'2009'[% END %],[% IF yyout.2010 %]'2010'[% END %]]);
+		pie.Set('chart.gutter', 40);
+		pie.Set('chart.background.grid.autofit', true);
+		pie.Set('chart.background.grid.autofit.align', true);
+		pie.Set('chart.key.shadow', true);
+		pie.Set('chart.key.shadow.offsetx', 0);
+		pie.Set('chart.key.shadow.offsety', 0);
+		pie.Set('chart.key.shadow.blur', 15);
+		pie.Set('chart.key.shadow.color', '#ddd');
+		pie.Set('chart.width', '450');
+		pie.Set('chart.background.grid', true);
+		pie.Set('chart.yaxispos', 'right');
+		pie.Set('chart.units.pre', 'R$ ');
+		pie.Set('chart.scale.thousand', '.');
+		pie.Set('chart.scale.point', ',');
+		pie.Draw();
+
+
+		[% END %]
+
+	}
+
+</script>
+
+
+<h2>Relação do tipo de repasse</h2>
+
+<center>
+<canvas id="pie1" width="620" height="300">[No canvas support]</canvas>
+
+<div id="prog_total">
+Repasse direto do governo federal: <b> R$ [% total_direto %] </b>
+<br/>
+Transferências para estados e municipios: <b> R$ [% total_repasse %] </b>
+</div>
+</center>
+
+<br/>
+
+[% IF yyout AND raw_total_repasse %]
+<h2>Evolução do investimento</h2>
+
+<center>
+<canvas id="line" width="820" height="400">[No canvas support]</canvas>
+</center>
+
+[% END %]
+
+
+<h2>Mais informações</h2>
+
+[% IF collection.codigo == 'XXYZ' %]
+
+N&atilde;o h&aacute; informa&ccedil;&otilde;s adicionais dispon&iacute;vel.
+
+[% ELSE %]
+
+Download: <a href="http://arquivos.portaldatransparencia.gov.br/pdfs/[% year %]/[% collection.codigo %].pdf">Documento oficial sobre este programa</a>
+
+[% END %]
+
+
+[% ELSE %]
+
+Não há informações adicionais sobre este programa.
+
+[% END %]
+
+<br/>
+<br/><br/>
+
