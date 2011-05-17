@@ -90,14 +90,14 @@ padding: 20px 20px;
 
 #introbox table tr td{
 	background-color: #6d6860;
-	font-size: 12pt;
+	font-size: 9pt;
 	color: #fff;
 }
 
 #introbox{
 	background-color: #6d6860;
 	margin: auto;
-	width: 350px;
+	width: 200px;
 	padding: 0px 10px;
 	font-size: 14pt;
     	-moz-border-radius: 5px;

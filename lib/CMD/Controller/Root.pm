@@ -37,6 +37,7 @@ sub base : Chained('/') PathPart('') CaptureArgs(0) {
 sub root : Chained('base') PathPart('') Args(0) {
     my ( $self, $c ) = @_;
     $c->stash->{bases} = $c->model('DB::Base');
+    $c->res->redirect( '/node/1' );
 }
 
 sub faq : Chained('base') Args(0) {
@@ -51,10 +52,12 @@ sub todo : Chained('base') Args(0) {
 sub node : Chained('base') Args(1) {
     my ( $self, $c, $node ) = @_;
     $c->stash->{node} = $node;
+    $c->stash->{bases} = $c->model('DB::Base');
 }
 
 sub programa : Chained('base') Args(1) {
     my ( $self, $c,  $id ) = @_;
+    $c->stash->{bases} = $c->model('DB::Base');
     my $rs = $c->model( 'DBUTF8::Node');
     my $collection = $rs->find( $id ) or $c->detach('/');
     my $tt = '2010'; #c->stash->{tt};

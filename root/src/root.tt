@@ -5,32 +5,7 @@
 
 <p>Escolha abaixo a base que deseja visualizar os dados, e logo depois o periodo.</p>
 
-<div id="introbox">
-
-<table width="80%"><tr><td>
-Base: 
-</td><td>
-<select name="base" id="base" onchange="javascript:base2nodes();">
-<option value=""></option>
-[% FOREACH item IN bases.all %]
-<option value="[% item.id %]">[% item.nome %]</option>
-[% END %]
-</select>
-</td></tr>
-
-<div id="periodo" style="display:none;">
-<tr><td>
-Periodo:
-</td><td>
-<select name="tt" id="node" onchange="javascript:redirect2node();">
-</select>
-</td></tr>
-
-</div>
-
-</table>
-
-</div>
+[% INCLUDE box.tt %]
 
 <br/><br/>
 
