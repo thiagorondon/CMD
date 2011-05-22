@@ -1,0 +1,23 @@
+
+INSTALL
+-------
+
+1. Comente as linhas 35 e 36, do arquivo lib/CMD/Schema/Node.pm.
+
+2. Crie um database para a aplicação. A sugestão, e para fins de documentação vamos chamar de 'cmd'.
+
+3. Execute o comando abaixo para importar a base de 2010 para o banco de dados.
+
+$ perl -Ilib raw2db/federal.pl 2010 data/raw/federal/diretas/2010.csv data/raw/federal/transferencia/2010.csv
+
+4. Descomente as linhas 35 e 36, no arquivo lib/CMD/Schema/Node.pm.
+
+6. Levante o servidor web:
+
+$ script/cmd_server.pl
+
+7. Agora, pode acessar o site pelo endereço: http://localhost:3000/
+
+
+
+
