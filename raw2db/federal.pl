@@ -14,6 +14,9 @@ use Data::Dumper;
 my $schema = CMD::Schema->connect( "dbi:mysql:db=cmd", "cmd", "aviao" );
 my $rs = $schema->resultset('Node');
 my $rs_cidade = $schema->resultset('Cidade');
+my $rs_bn = $schema->resultset('BaseNode');
+my $rs_base = $schema->resultset('Base');
+
 my $year;
 
 &main;
@@ -51,6 +54,15 @@ sub main {
 
     my $root = $rs->create( { content => $year, valor => 0, cidade_codigo => 0 } );
     $migrate->hash_to_db( $root, \%tree );
+
+    my $base = $rs_base->update_or_create({
+       nome => 'Governo Federal' 
+    });
+
+    $rs_bn->create({
+        node_id => $root->node_id,
+        base_id => $base->id
+    });
 }
 
 sub process_data_transferencia {
