@@ -18,7 +18,7 @@ __PACKAGE__->set_primary_key(qw(base_id node_id));
 __PACKAGE__->belongs_to(
     base => 'CMD::Schema::Base' => { 'foreign.id' => 'self.base_id' } );
 
-__PACKAGE__->has_one(
+__PACKAGE__->belongs_to(
     node => 'CMD::Schema::Node' => { 'foreign.node_id' => 'self.node_id' } );
 
 =head1 AUTHOR
