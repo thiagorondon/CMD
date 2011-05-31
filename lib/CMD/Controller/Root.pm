@@ -32,13 +32,14 @@ The root page (/)
 sub base : Chained('/') PathPart('') CaptureArgs(0) {
     my ( $self, $c ) = @_;
     $c->stash->{current_model} = 'DB';
+
     # warning to add something in stash here, because json output.
 }
 
 sub root : Chained('base') PathPart('') Args(0) {
     my ( $self, $c ) = @_;
     $c->stash->{bases} = $c->model('DB::Base');
-    $c->res->redirect( '/node/1' );
+    $c->res->redirect('/node/1');
 }
 
 sub faq : Chained('base') Args(0) {
@@ -52,85 +53,109 @@ sub todo : Chained('base') Args(0) {
 
 sub node : Chained('base') Args(1) {
     my ( $self, $c, $node ) = @_;
-    $c->stash->{node} = $node;
-    $c->stash->{objnode} = $c->model('DB::Node')->find($node);
-    $c->stash->{rootnode} = get_root_by_nodeid($c->stash->{objnode});
-    $c->stash->{bases} = $c->model('DB::Base');
+    $c->stash->{node}     = $node;
+    $c->stash->{objnode}  = $c->model('DB::Node')->find($node);
+    $c->stash->{rootnode} = get_root_by_nodeid( $c->stash->{objnode} );
+    $c->stash->{bases}    = $c->model('DB::Base');
 }
 
 sub programa : Chained('base') Args(1) {
-    my ( $self, $c,  $id ) = @_;
+    my ( $self, $c, $id ) = @_;
     $c->stash->{bases} = $c->model('DB::Base');
-    my $rs = $c->model( 'DBUTF8::Node');
-    my $collection = $rs->find( $id ) or $c->detach('/');
-    my $tt = '2010'; #c->stash->{tt};
+    my $rs         = $c->model('DBUTF8::Node');
+    my $collection = $rs->find($id) or $c->detach('/');
+    my $tt         = '2010';                              #c->stash->{tt};
 
     my %yyout;
-    foreach my $yy (2006 .. 2010) {
-        $yyout{$yy} =
-        $rs->search_rs({ codigo => $collection->codigo,
-        funcao => $collection->funcao, subfuncao => $collection->subfuncao,
-        ano => $yy })->get_column('valor')->sum;
+    foreach my $yy ( 2006 .. 2010 ) {
+        $yyout{$yy} = $rs->search_rs(
+            {
+                codigo    => $collection->codigo,
+                funcao    => $collection->funcao,
+                subfuncao => $collection->subfuncao,
+                ano       => $yy
+            }
+        )->get_column('valor')->sum;
     }
 
-    my $total = $rs->search_rs({ codigo => $collection->codigo,
-        funcao => $collection->funcao, subfuncao => $collection->subfuncao,
-        ano => $tt
-    })
-        ->get_column('valor')->sum;
+    my $total = $rs->search_rs(
+        {
+            codigo    => $collection->codigo,
+            funcao    => $collection->funcao,
+            subfuncao => $collection->subfuncao,
+            ano       => $tt
+        }
+    )->get_column('valor')->sum;
 
-    my $total_direto = $rs->search_rs({ codigo => $collection->codigo, 
-        funcao => $collection->funcao, subfuncao => $collection->subfuncao,
-        estado => undef,
-        ano => $tt
-        })->get_column('valor')->sum;
+    my $total_direto = $rs->search_rs(
+        {
+            codigo    => $collection->codigo,
+            funcao    => $collection->funcao,
+            subfuncao => $collection->subfuncao,
+            estado    => undef,
+            ano       => $tt
+        }
+    )->get_column('valor')->sum;
 
-    my $total_repasse = $rs->search_rs({ codigo => $collection->codigo,
-        funcao => $collection->funcao, subfuncao => $collection->subfuncao,
-        estado => { '!=', undef },
-        ano => $tt
+    my $total_repasse = $rs->search_rs(
+        {
+            codigo    => $collection->codigo,
+            funcao    => $collection->funcao,
+            subfuncao => $collection->subfuncao,
+            estado    => { '!=', undef },
+            ano       => $tt
         },
-        
-        )->get_column('valor')->sum;
 
-    my $objs = $rs->search({ codigo => $collection->codigo,
-        funcao => $collection->funcao, subfuncao => $collection->subfuncao,
-        estado => { '!=' => undef },
-        ano => $tt
-        });
+    )->get_column('valor')->sum;
+
+    my $objs = $rs->search(
+        {
+            codigo    => $collection->codigo,
+            funcao    => $collection->funcao,
+            subfuncao => $collection->subfuncao,
+            estado    => { '!=' => undef },
+            ano       => $tt
+        }
+    );
     my %estado;
 
-    foreach my $item ($objs->all) {
+    foreach my $item ( $objs->all ) {
         next unless $item->valor or $item->estado;
-        if ( grep(keys %estado, $item->estado) ) {
-            $estado{$item->estado} += $item->valor;
-        } else {
-            $estado{$item->estado} = $item->valor;
+        if ( grep( keys %estado, $item->estado ) ) {
+            $estado{ $item->estado } += $item->valor;
+        }
+        else {
+            $estado{ $item->estado } = $item->valor;
         }
     }
     my @estados;
-    foreach my $item (keys %estado) {
+    foreach my $item ( keys %estado ) {
         my $ufname = $item;
-        my $pc = $estado{$item} * 100 / $total; 
-        $pc = formata_float($pc, 2);
+        my $pc     = $estado{$item} * 100 / $total;
+        $pc = formata_float( $pc, 2 );
+
         #$ufname =~ s/([\w']+)/\u\L$1/g;
-        push(@estados, { 
-            nome => $ufname . " ($pc\%)", 
-            total => $estado{$item}, 
-            total_print => formata_real($estado{$item}) } );
+        push(
+            @estados,
+            {
+                nome        => $ufname . " ($pc\%)",
+                total       => $estado{$item},
+                total_print => formata_real( $estado{$item} )
+            }
+        );
     }
 
     $c->stash(
-        id          => $id,
-        collection    => $collection,
-        total => formata_real($total),
-        total_direto => formata_real($total_direto),
-        total_repasse => formata_real($total_repasse),
-        raw_total_direto => $total_direto || 0,
+        id                => $id,
+        collection        => $collection,
+        total             => formata_real($total),
+        total_direto      => formata_real($total_direto),
+        total_repasse     => formata_real($total_repasse),
+        raw_total_direto  => $total_direto || 0,
         raw_total_repasse => $total_repasse || 0,
-        raw_total => $total || 0,
-        estados => [ @estados ],
-        yyout => \%yyout
+        raw_total         => $total || 0,
+        estados           => [@estados],
+        yyout             => \%yyout
     );
 }
 
