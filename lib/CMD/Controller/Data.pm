@@ -26,16 +26,16 @@ sub node2base : Chained('base') Args(1) {
     my ( $self, $c, $node ) = @_;
     my $sc = $c->model('DB::Node')->find( { node_id => $node } );
     my $root = get_root_by_nodeid($sc);
-    my $obj = $c->model('DB::BaseNode')->search( { node_id => $root->id } )->first;
+    my $obj =
+      $c->model('DB::BaseNode')->search( { node_id => $root->id } )->first;
     $c->stash->{data} = { base_id => $obj->base_id } if $obj;
     $c->forward('View::JSON');
 }
 
-
 sub node : Chained('base') Args(1) {
     my ( $self, $c, $id ) = @_;
-    my $rs = $c->model('DB::Node');
-    my $tree = $c->stash->{tree} = $rs->search( { parent_id => $id } );
+    my $rs    = $c->model('DB::Node');
+    my $tree  = $c->stash->{tree} = $rs->search( { parent_id => $id } );
     my $total = 0;
     map {
         $total += $_->valor
@@ -49,7 +49,7 @@ sub node : Chained('base') Args(1) {
 sub handle_TREE : Private {
     my ( $self, $c ) = @_;
 
-    my $tree             = $c->stash->{tree};
+    my $tree = $c->stash->{tree};
 
     # I don't want this in JSON output.
     delete $c->stash->{collection};
@@ -88,10 +88,10 @@ sub handle_TREE : Private {
             my $color             = shift(@bgcolor) || $bgcolor_default;
             my $valor_print       = formata_valor( $item->valor );
             my $porcentagem       = formata_float( $valor_porcentagem, 3 );
-            my $zone              = $item->children->count ? '/node' : '/programa';
-            my $link              = join( '/', $zone, $item->id );
+            my $zone = $item->children->count ? '/node' : '/programa';
+            my $link = join( '/', $zone, $item->id );
 
-           # Fix content with 'repasse' in db. Fix DB ?
+            # Fix content with 'repasse' in db. Fix DB ?
             my $title =
               $item->content eq 'repasse'
               ? 'Repasse para estados e mun&iacute;cipios'
