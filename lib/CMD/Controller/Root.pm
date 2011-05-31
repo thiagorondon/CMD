@@ -54,7 +54,7 @@ sub node : Chained('base') Args(1) {
     my ( $self, $c, $node ) = @_;
     $c->stash->{node} = $node;
     $c->stash->{objnode} = $c->model('DB::Node')->find($node);
-    $c->stash->{rootnode} = my $root = get_root_by_nodeid($c->stash->{objnode});
+    $c->stash->{rootnode} = get_root_by_nodeid($c->stash->{objnode});
     $c->stash->{bases} = $c->model('DB::Base');
 }
 

@@ -43,7 +43,8 @@ sub hash_to_db () {
             my ( $valor_parcial, $codigo, $subfuncao, $funcao, $estado,
                 $codmunicipio, $municipio )
               = split( '-', $valor );
-
+    
+            warn $valor_parcial if $valor_parcial;
 
             $self->rs_cidade->update_or_create({
                 codigo => $codmunicipio,
@@ -51,7 +52,8 @@ sub hash_to_db () {
                 estado => $estado
             }) if $codmunicipio;
 
-            my $node = $self->rs->create(
+            #my $node = 
+            $self->rs->create(
                 {
                     content       => $item,
                     valor         => $valor,

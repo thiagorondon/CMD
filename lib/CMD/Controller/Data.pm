@@ -50,8 +50,6 @@ sub handle_TREE : Private {
     my ( $self, $c ) = @_;
 
     my $tree             = $c->stash->{tree};
-    my $tt               = $c->stash->{tt};
-    my $total_collection = $c->stash->{total_collection};
 
     # I don't want this in JSON output.
     delete $c->stash->{collection};
@@ -59,7 +57,6 @@ sub handle_TREE : Private {
     delete $c->stash->{tt};
     delete $c->stash->{total_collection};
 
-    my @levels;
     my @children;
     my @zones;
     my @bgcolor         = bgcolor;
@@ -94,7 +91,6 @@ sub handle_TREE : Private {
             my $zone              = $item->children->count ? '/node' : '/programa';
             my $link              = join( '/', $zone, $item->id );
 
-           #push( @levels, $item->level ) unless grep ( $item->level, @levels );
            # Fix content with 'repasse' in db. Fix DB ?
             my $title =
               $item->content eq 'repasse'
@@ -138,7 +134,6 @@ sub handle_TREE : Private {
     warn $c->stash->{zones};
     $c->stash->{children} = [@children];
 
-    #$c->stash->{levels}   = [@levels];
     $c->forward('View::JSON');
 }
 
