@@ -14,6 +14,8 @@ $ vim db_config.json
 {
     "db_config" : {
         "dsn": "dbi:mysql:db=cmd",
+#       "dsn":"dbi:mysql:db=cmd",       # to install on mysql
+#       "dsn":"dbi:Pg:dbname=twitter",  # to install on postgres
         "user": "usuario",
         "password": "senha",
         "install": "yes",
