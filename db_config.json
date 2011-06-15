@@ -1,0 +1,9 @@
+
+{
+  "db_config":{
+    "password":"bar",
+    "dsn":"dbi:mysql:db=cmd",
+    "install":"yes",
+    "user":"foo"
+  }
+}
