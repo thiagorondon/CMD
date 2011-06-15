@@ -50,7 +50,7 @@ sub hash_to_db () {
                 codigo => $codmunicipio,
                 nome => $municipio,
                 estado => $estado
-            }) if $codmunicipio;
+            }) if $codmunicipio and $codmunicipio =~ m/^(\d+)$/;
 
             #my $node = 
             $self->rs->create(

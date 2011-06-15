@@ -2,7 +2,8 @@
 {
   "db_config":{
     "password":"bar",
-    "dsn":"dbi:mysql:db=cmd",
+#   "dsn":"dbi:mysql:db=cmd", # to install on mysql
+    "dsn":"dbi:SQLite:dbname=cmd", # to install on sqlite
     "install":"yes",
     "user":"foo"
   }

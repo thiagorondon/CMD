@@ -85,18 +85,7 @@ sub is_db_configured {
                 __PACKAGE__->config->{ db_config }->{ user },
                 __PACKAGE__->config->{ db_config }->{ password },
             );
-            my $stmt = "create table if not exists nodes ( node_id int auto_increment PRIMARY KEY , parent_id int, position int , lft int, rgt int, content varchar(255), valor double, codigo varchar(255), funcao varchar(255) , subfuncao varchar(255) , cidade_codigo int , ano int, estado varchar(255) );";
-            $schema->storage->dbh->prepare( $stmt )->execute(  );
-
-            $stmt = "create table if not exists credores ( codigo varchar(255) PRIMARY KEY , nome varchar(255) );";
-            $schema->storage->dbh->prepare( $stmt )->execute(  );
-            $stmt = "create table if not exists cidades ( codigo int auto_increment primary key , nome varchar(255) , estado varchar(255) );";
-            $schema->storage->dbh->prepare( $stmt )->execute(  );
-            $stmt = "create table if not exists bases_nodes ( base_id int , node_id int );";
-            $schema->storage->dbh->prepare( $stmt )->execute(  );
-            $stmt = "create table if not exists bases ( id int AUTO_INCREMENT PRIMARY KEY, nome varchar(255) );";
-            ;
-            $schema->storage->dbh->prepare( $stmt )->execute(  );
+            $schema->deploy;
             my $cmd = "perl -Ilib raw2db/federal.pl 2010 data/raw/federal/diretas/2010.csv data/raw/federal/transferencia/2010.csv";
             warn "Iniciando instalacao do banco de dados.";
             warn `$cmd` . "\n\n"; 
