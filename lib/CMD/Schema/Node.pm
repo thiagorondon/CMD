@@ -3,8 +3,13 @@ package CMD::Schema::Node;
 
 use strict;
 use warnings;
+use Config::Any;
+
 
 use base qw( DBIx::Class );
+my $config = Config::Any->load_files( { files => [ 'db_config.json' ], use_ext => 5 } );
+use Data::Dumper;
+warn Dumper $config;
 
 __PACKAGE__->load_components(qw/Tree::AdjacencyList PK::Auto Core/);
 __PACKAGE__->table('nodes');
@@ -31,9 +36,12 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key('node_id');
 
-# FIX: Now, we need to comment this two lines to deploy.
-__PACKAGE__->parent_column('parent_id');
-__PACKAGE__->repair_tree(1);
+__PACKAGE__->parent_column('parent_id') if ( 
+    $config->[0]{ 'db_config.json' }->{ db_config }->{ install } ne 'yes'
+);
+__PACKAGE__->repair_tree(1) if (
+    $config->[0]{ 'db_config.json' }->{ db_config }->{ install } ne 'yes'
+);
 
 __PACKAGE__->has_one( bases_nodes => 'CMD::Schema::BaseNode' =>
       { 'foreign.node_id' => 'self.node_id' } );
