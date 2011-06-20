@@ -10,7 +10,7 @@ __PACKAGE__->load_components(qw/Core/);
 __PACKAGE__->table('bases');
 __PACKAGE__->add_columns(
     id   => { is_auto_increment => 1, data_type => 'integer' },
-    nome => { data_type         => 'varchar' },
+    nome => { data_type         => 'varchar', is_nullable => 1, },
 );
 
 __PACKAGE__->set_primary_key('id');

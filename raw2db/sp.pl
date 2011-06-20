@@ -11,8 +11,22 @@ use CMD::Utils qw(fix_valor);
 use CMD::Data::Migrate;
 use Data::Dumper;
 use Text::CSV;
+use Config::Any;
 
-my $schema = CMD::Schema->connect( "dbi:mysql:db=cmd", "cmd", "aviao" );
+my $config = Config::Any->load_files( { files => [ 'db_config.json' ], use_ext => 5 } );
+if ( ! $config ) {
+    warn "Arquivo de configuracao '../db_config.json' nao encontrado.";
+    warn "leia o arquivo INSTALL para mais informacoes.";
+    return 0;
+}
+my $schema = CMD::Schema->connect(
+    $config->[0]{ 'db_config.json' }->{ db_config }->{ dsn }, 
+    $config->[0]{ 'db_config.json' }->{ db_config }->{ user },
+    $config->[0]{ 'db_config.json' }->{ db_config }->{ password }, 
+#   "dbi:mysql:db=cmd", 
+#   "cmd", 
+#   "aviao" 
+);
 my $rs = $schema->resultset('Node');
 my $rs_cidade = $schema->resultset('Cidade');
 my $year;
