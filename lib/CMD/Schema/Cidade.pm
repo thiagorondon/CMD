@@ -10,8 +10,8 @@ __PACKAGE__->load_components(qw/Core/);
 __PACKAGE__->table('cidades');
 __PACKAGE__->add_columns(
     codigo => { data_type => 'integer' },
-    nome   => { data_type => 'varchar' },
-    estado => { data_type => 'varchar' }
+    nome   => { data_type => 'varchar', is_nullable => 1,  },
+    estado => { data_type => 'varchar', is_nullable => 1,  }
 );
 
 __PACKAGE__->set_primary_key('codigo');
