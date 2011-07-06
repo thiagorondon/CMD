@@ -2,22 +2,44 @@
 INSTALL
 -------
 
-1. Comente as linhas 35 e 36, do arquivo lib/CMD/Schema/Node.pm.
+1. Crie um database para a aplicação. A sugestão, e para fins 
+ de documentação vamos chamar de 'cmd'.
+    $ mysql
+    $ create database cmd;
+    $ grant all on cmd.* to usuario@localhost indentified by 'senha';
 
-2. Crie um database para a aplicação. A sugestão, e para fins de documentação vamos chamar de 'cmd'.
+2 Crie o arquivo de configuracao db_config.json com o conteudo:
+$ cd My_app_dir 
+$ vim db_config.json
+{
+    "db_config" : {
+        "dsn": "dbi:mysql:db=cmd",
+#       "dsn":"dbi:mysql:db=cmd",       # to install on mysql
+#       "dsn":"dbi:Pg:dbname=twitter",  # to install on postgres
+        "user": "usuario",
+        "password": "senha",
+        "install": "yes",
+    }
+}
 
-3. Execute o comando abaixo para importar a base de 2010 para o banco de dados.
+OBSERVACOES
+
+1 instale o "DBD::Mysql"( intale antes libmysqlclient-dev ) via cpanm ou "apt-get install libmysqlclient-dev libdbd-mysql-perl"
+
+2. instale as dependencias perl e execute o Makefile
+$ cd CMD 
+$ cpanm inc::Module::Install
+$ cpanm Module::Install::Catalyst
+$ perl Makefile.PL test
+$ make installdeps
+
+
+3. Execute o comando abaixo para importar a base de 2010 ( ou outras ) para o banco de dados.
 
 $ perl -Ilib raw2db/federal.pl 2010 data/raw/federal/diretas/2010.csv data/raw/federal/transferencia/2010.csv
-
-4. Descomente as linhas 35 e 36, no arquivo lib/CMD/Schema/Node.pm.
 
 6. Levante o servidor web:
 
 $ script/cmd_server.pl
 
 7. Agora, pode acessar o site pelo endereço: http://localhost:3000/
-
-
-
-
