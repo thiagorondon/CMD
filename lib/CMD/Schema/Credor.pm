@@ -9,8 +9,8 @@ use base qw( DBIx::Class );
 __PACKAGE__->load_components(qw/Core/);
 __PACKAGE__->table('credores');
 __PACKAGE__->add_columns(
-    codigo => { data_type => 'varchar' },
-    nome   => { data_type => 'varchar' },
+    codigo => { data_type => 'varchar', is_nullable => 1,  },
+    nome   => { data_type => 'varchar', is_nullable => 1,  },
 );
 
 __PACKAGE__->set_primary_key('codigo');

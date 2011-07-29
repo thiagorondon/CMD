@@ -43,15 +43,17 @@ sub hash_to_db () {
             my ( $valor_parcial, $codigo, $subfuncao, $funcao, $estado,
                 $codmunicipio, $municipio )
               = split( '-', $valor );
-
+    
+            warn $valor_parcial if $valor_parcial;
 
             $self->rs_cidade->update_or_create({
                 codigo => $codmunicipio,
                 nome => $municipio,
                 estado => $estado
-            }) if $codmunicipio;
+            }) if $codmunicipio and $codmunicipio =~ m/^(\d+)$/;
 
-            my $node = $self->rs->create(
+            #my $node = 
+            $self->rs->create(
                 {
                     content       => $item,
                     valor         => $valor,

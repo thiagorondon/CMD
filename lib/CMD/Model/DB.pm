@@ -7,9 +7,9 @@ __PACKAGE__->config(
     schema_class => 'CMD::Schema',
 
     connect_info => {
-        dsn      => 'dbi:mysql:db=cmd',
-        user     => 'cmd',
-        password => 'aviao',
+        dsn      => CMD->config->{ db_config }->{ dsn },
+        user     => CMD->config->{ db_config }->{ user },
+        password => CMD->config->{ db_config }->{ password },
     }
 );
 

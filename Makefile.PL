@@ -13,6 +13,7 @@ requires 'Catalyst::Runtime' => '5.80032';
 requires 'Catalyst::Plugin::ConfigLoader';
 requires 'Catalyst::Plugin::Static::Simple';
 requires 'Catalyst::Action::RenderView';
+requires 'DBIx::Class::Tree::AdjacencyList';
 requires 'Moose';
 requires 'namespace::autoclean';
 
