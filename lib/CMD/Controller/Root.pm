@@ -142,8 +142,9 @@ Standard 404 error page
 
 sub error_404 : Chained('base') PathPart('') Args {
     my ( $self, $c ) = @_;
-    $c->response->body('Page not found');
-    $c->response->status(404);
+#    $c->response->body('Page not found');
+#    $c->response->status(404);
+    $c->res->redirect('/');
 }
 
 =head2 end
