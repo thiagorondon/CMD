@@ -66,7 +66,8 @@ sub update_config_status {
 }
 
 sub is_db_configured {
-    my ( $self, $c ) = @_;
+    #my ( $self, $c ) = @_;
+    my $self = shift;
     warn "INICIANDO VERIFICACOES DE INSTALACAO DO BANCO DE DADOS";
     my $schema = CMD::Schema->connect(
         __PACKAGE__->config->{ db_config }->{ dsn },

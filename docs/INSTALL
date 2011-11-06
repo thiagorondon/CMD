@@ -1,4 +1,7 @@
 
+Este arquivo contêm informações de como realizar a instalação
+do site http://www.paraondefoiomeudinheiro.com.br/.
+
 INSTALL
 -------
 
@@ -8,7 +11,7 @@ INSTALL
     $ create database cmd;
     $ grant all on cmd.* to usuario@localhost indentified by 'senha';
 
-2 Crie o arquivo de configuracao db_config.json com o conteudo:
+2. O Crie o arquivo de configuracao db_config.json com o conteudo:
 $ cd My_app_dir 
 $ vim db_config.json
 {
@@ -22,7 +25,7 @@ $ vim db_config.json
     }
 }
 
-OBSERVACOES
+OBSERVAÇÕES
 
 1 instale o "DBD::Mysql"( intale antes libmysqlclient-dev ) via cpanm ou "apt-get install libmysqlclient-dev libdbd-mysql-perl"
 
@@ -33,13 +36,9 @@ $ cpanm Module::Install::Catalyst
 $ perl Makefile.PL test
 $ make installdeps
 
-
-3. Execute o comando abaixo para importar a base de 2010 ( ou outras ) para o banco de dados.
-
-$ perl -Ilib raw2db/federal.pl 2010 data/raw/federal/diretas/2010.csv data/raw/federal/transferencia/2010.csv
-
-6. Levante o servidor web:
+3. Levante o servidor web:
 
 $ script/cmd_server.pl
 
-7. Agora, pode acessar o site pelo endereço: http://localhost:3000/
+4. Agora, pode acessar o site pelo endereço: http://localhost:3000/
+

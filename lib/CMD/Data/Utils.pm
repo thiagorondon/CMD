@@ -17,7 +17,8 @@ sub get_root_by_nodeid {
     my $root = $node;
     my $point = $node;
     while ($point) {
-        my @parent = $point->parents();
+        my @parent;
+        eval { @parent = $point->parents() };
         $root = $parent[0] if scalar @parent;
         $point = $point->parent;
     }

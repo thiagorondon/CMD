@@ -97,6 +97,7 @@ sub process_data_transferencia {
 
         my ($last_valor) = split('-', $tree{$funcao}{$subfuncao}{'repasse'}{$estado}{$municipio}{$programa});
 
+        return %tree unless looks_like_number($valor);
         $last_valor += $valor;
 
         $tree{$funcao}{$subfuncao}{'repasse'}{$estado}{$municipio}{$programa} =
@@ -127,6 +128,7 @@ sub process_data_direta {
         }
 
         my ($last_valor) = split('-', $tree{$funcao}{$subfuncao}{$programa} );
+        return %tree unless looks_like_number($valor);
         $last_valor += $valor;
 
         $tree{$funcao}{$subfuncao}{$programa} =

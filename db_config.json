@@ -1,11 +1,1 @@
-
-{
-  "db_config":{
-    "password":"bar",
-#   "dsn":"dbi:mysql:db=cmd",       # to install on mysql
-#   "dsn":"dbi:Pg:dbname=twitter",  # to install on postgres
-    "dsn":"dbi:SQLite:dbname=cmd",  # to install on sqlite
-    "install":"yes",
-    "user":"foo"
-  }
-}
+{"db_config":{"password":"","dsn":"dbi:mysql:db=cmd","install":"no","user":"root"}}
