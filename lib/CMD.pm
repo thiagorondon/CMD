@@ -46,15 +46,6 @@ __PACKAGE__->config(
     },
 );
 
-__PACKAGE__->config(
-        static => {
-                    debug => 1,
-                    dirs => [ 'static']
-                            },
-                                );
-
-
-
 # Load database config:
 __PACKAGE__->config( 'Plugin::ConfigLoader' => { file => 'db_config.json' } );
 

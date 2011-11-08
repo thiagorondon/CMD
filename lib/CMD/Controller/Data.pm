@@ -82,8 +82,8 @@ sub handle_TREE : Private {
         $c->stash->{total_tree} = formata_real( $total, 2 );
 
         # Make tree for openspending javascript.
-        map {
-            my $item              = $_;
+        foreach my $item ($tree->all) {
+            next unless $total and $item->valor;
             my $valor_porcentagem = $item->valor * 100 / $total;
             my $color             = shift(@bgcolor) || $bgcolor_default;
             my $valor_print       = formata_valor( $item->valor );
@@ -124,14 +124,13 @@ sub handle_TREE : Private {
                 }
               )
               if $item->valor
-        } $tree->all;
+        };
     }
 
     # here, we go.
     @zones = reverse(@zones);
     shift(@zones);
     $c->stash->{zones} = join( ', ', @zones ) if @zones;
-    warn $c->stash->{zones};
     $c->stash->{children} = [@children];
 
     $c->forward('View::JSON');

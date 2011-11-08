@@ -15,6 +15,7 @@ is_valid_json $res->content;
 is_valid_json $res->content;
 
 ($res, $c) = ctx_request('/data/node/1');
+warn $res->content;
 is_valid_json $res->content;
 
 done_testing();
