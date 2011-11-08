@@ -37,7 +37,6 @@ our $VERSION = '0.01';
 
 __PACKAGE__->config(
     name => 'CMD',
-
     # Disable deprecated behavior needed by old applications
     disable_component_resolution_regex_fallback => 1,
     default_view                                => 'TT',
@@ -46,6 +45,15 @@ __PACKAGE__->config(
           [ map { __PACKAGE__->path_to(@$_) }[qw(root src)], [qw(root lib)] ]
     },
 );
+
+__PACKAGE__->config(
+        static => {
+                    debug => 1,
+                    dirs => [ 'static']
+                            },
+                                );
+
+
 
 # Load database config:
 __PACKAGE__->config( 'Plugin::ConfigLoader' => { file => 'db_config.json' } );
@@ -68,7 +76,7 @@ sub update_config_status {
 sub is_db_configured {
     #my ( $self, $c ) = @_;
     my $self = shift;
-    warn "INICIANDO VERIFICACOES DE INSTALACAO DO BANCO DE DADOS";
+    print "INICIANDO VERIFICACOES DE INSTALACAO DO BANCO DE DADOS";
     my $schema = CMD::Schema->connect(
         __PACKAGE__->config->{ db_config }->{ dsn },
         __PACKAGE__->config->{ db_config }->{ user },
@@ -80,7 +88,7 @@ sub is_db_configured {
          and defined __PACKAGE__->config->{ db_config }->{ password }
          and defined __PACKAGE__->config->{ db_config }->{ dsn }
             ) {
-            warn "Tentarei criar as tabelas no banco " ;
+            print "Tentarei criar as tabelas no banco " ;
             my $schema = CMD::Schema->connect(
                 __PACKAGE__->config->{ db_config }->{ dsn },
                 __PACKAGE__->config->{ db_config }->{ user },
@@ -88,9 +96,9 @@ sub is_db_configured {
             );
             $schema->deploy;
             my $cmd = "perl -Ilib raw2db/federal.pl 2010 data/raw/federal/diretas/2010.csv data/raw/federal/transferencia/2010.csv";
-            warn "Iniciando instalacao do banco de dados.";
+            print "Iniciando instalacao do banco de dados.";
             warn `$cmd` . "\n\n"; 
-            warn "dados inseridos no banco";
+            print "dados inseridos no banco";
             $self->update_config_status();
 
             warn <<HELPADD

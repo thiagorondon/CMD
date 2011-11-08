@@ -71,7 +71,7 @@ _gaq.push(['_trackPageview']);
 [% END %]
 
 <table cellpading="0" cellspacing="0" width="100%"><tr><td>
-<a href="/"><img src="/static/images/logo-pofomd.png" border="0" /></a>
+      <a href="/"><img src="[% c.uri_for('/static/images/logo-pofomd.png') %]" border="0" /></a>
 </td>
 <td align="right" style="vertical-align: bottom;">
 <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.paraondefoiomeudinheiro.com.br/year/2010" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
