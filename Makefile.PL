@@ -16,7 +16,7 @@ requires 'Catalyst::Action::RenderView';
 requires 'DBIx::Class::Tree::AdjacencyList';
 requires 'Moose';
 requires 'namespace::autoclean';
-
+requires 'Catalyst::Model::DBIC::Schema';
 requires 'Catalyst::View::JSON';
 requires 'Scalar::Util';
 
