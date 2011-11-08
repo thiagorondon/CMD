@@ -20,6 +20,8 @@ requires 'Catalyst::Model::DBIC::Schema';
 requires 'Catalyst::View::JSON';
 requires 'Scalar::Util';
 requires 'DBD::mysql';
+requires 'FCGI';
+requires 'FCGI::ProcManager';
 
 requires 'Config::General'; # This should reflect the config file format you've chosen
                  # See Catalyst::Plugin::ConfigLoader for supported formats
