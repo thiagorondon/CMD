@@ -8,8 +8,8 @@ use Config::Any;
 
 use base qw( DBIx::Class );
 my $config = Config::Any->load_files( { files => [ 'db_config.json' ], use_ext => 5 } );
-use Data::Dumper;
-warn Dumper $config;
+#use Data::Dumper;
+#warn Dumper $config;
 
 __PACKAGE__->load_components(qw/Tree::AdjacencyList PK::Auto Core/);
 __PACKAGE__->table('nodes');

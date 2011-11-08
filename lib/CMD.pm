@@ -76,7 +76,7 @@ sub update_config_status {
 sub is_db_configured {
     #my ( $self, $c ) = @_;
     my $self = shift;
-    print "INICIANDO VERIFICACOES DE INSTALACAO DO BANCO DE DADOS";
+    print "INICIANDO VERIFICACOES DE INSTALACAO DO BANCO DE DADOS\n";
     my $schema = CMD::Schema->connect(
         __PACKAGE__->config->{ db_config }->{ dsn },
         __PACKAGE__->config->{ db_config }->{ user },
@@ -88,7 +88,7 @@ sub is_db_configured {
          and defined __PACKAGE__->config->{ db_config }->{ password }
          and defined __PACKAGE__->config->{ db_config }->{ dsn }
             ) {
-            print "Tentarei criar as tabelas no banco " ;
+            print "Tentarei criar as tabelas no banco \n" ;
             my $schema = CMD::Schema->connect(
                 __PACKAGE__->config->{ db_config }->{ dsn },
                 __PACKAGE__->config->{ db_config }->{ user },
@@ -96,9 +96,9 @@ sub is_db_configured {
             );
             $schema->deploy;
             my $cmd = "perl -Ilib raw2db/federal.pl 2010 data/raw/federal/diretas/2010.csv data/raw/federal/transferencia/2010.csv";
-            print "Iniciando instalacao do banco de dados.";
+            print "Iniciando instalacao do banco de dados.\n";
             warn `$cmd` . "\n\n"; 
-            print "dados inseridos no banco";
+            print "dados inseridos no banco\n";
             $self->update_config_status();
 
             warn <<HELPADD
