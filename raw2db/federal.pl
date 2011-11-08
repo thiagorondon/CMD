@@ -12,7 +12,7 @@ use CMD::Data::Migrate;
 use Data::Dumper;
 use Config::Any;
 
-my $config = Config::Any->load_files( { files => [ 'db_config.json' ], use_ext => 5 } );
+my $config = Config::Any->load_files( { files => [ "$Bin/../db_config.json" ], use_ext => 5 } );
 if ( ! $config ) {
     warn "Arquivo de configuracao 'db_config.json' nao encontrado.";
     warn "leia o arquivo INSTALL para mais informacoes.";
