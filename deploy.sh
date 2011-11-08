@@ -1,4 +1,6 @@
 
+# Script para o deploy do banco de dados.
+
 #rm cmd-novo.db
 
 #dbicadmin -Ilib --schema CMD::Schema \
@@ -6,7 +8,7 @@
 #	--deploy
 
 dbicadmin -Ilib --schema CMD::Schema \
-	--connect='["dbi:mysql:db=cmd", "cmd", "aviao"]' \
+	--connect='["dbi:mysql:db=cmd", "cmd", ""]' \
 	--deploy
 
 #dbicadmin -Ilib --schema CMD::Schema \
