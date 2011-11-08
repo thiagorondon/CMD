@@ -7,6 +7,7 @@ function getNode(id) {
 
 function geturljson(url,year) {
 	last_url = url;
+  $('.voltarpagina').hide();
 	$.getJSON(url, function(rdata) {
 		$('.my-new-list').empty();
   		var data = rdata.data;
@@ -15,8 +16,10 @@ function geturljson(url,year) {
 			$('.total').html("Total: R$ " + rdata.total_tree);
 			if (rdata.zones != undefined) {
 				$('.intro').html("<p>" + rdata.zones + "</p>");
-			} else {
+        $('.voltarpagina').show();
+      } else {
 				$('.intro').html("<p>Esta disposição é baseada na lei de diretrizes orçamentarias e os dados são do portal da transparência, no qual estão apenas os investimentos realizados pelo governo federal. </p>");
+        $('.voltarpagina').hide();
 			}
 		}
 		

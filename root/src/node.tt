@@ -7,7 +7,9 @@ getNode([% node %]);
 </div>
 
 [% IF node %]
+<div class="voltarpagina">
 <p><a href="javascript:history.go(-1)">Voltar para página anterior</a></p>
+</div>
 [% END %]
 <div id="mainvis" style="width: auto; height: 400px;"> </div>
 <div id="legenda">Tri = Trilhões, Bi = Bilhões, Mi = Milhões</div>
