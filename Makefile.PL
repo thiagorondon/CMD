@@ -6,7 +6,6 @@ use Module::Install::Catalyst; # Complain loudly if you don't have
                                # Catalyst::Devel installed or haven't said
                                # 'make dist' to create a standalone tarball.
 
-                               break for tests
 name 'CMD';
 all_from 'lib/CMD.pm';
 
