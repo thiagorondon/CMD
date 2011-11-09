@@ -55,8 +55,8 @@ function showData(data,rdata,url,year) {
 	});
 	items.push('</tbody></table>');
 
-	items.push("<br />Formato aberto dos dados listados nesta página em JSON: ");
-	items.push("<a href='" + url + "' target='_blank'>http://www.paraondefoimeudinheiro.com.br" + url + "</a><br />");
+	items.push("<p>Formato aberto dos dados listados nesta página em JSON:</p>");
+	items.push("<pre><a href='" + url + "' target='_blank'>http://www.paraondefoimeudinheiro.com.br" + url + "</a></pre>");
 	
 	$('.my-new-list').html(items.join(''));
 

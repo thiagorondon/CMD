@@ -44,18 +44,6 @@ letter-spacing: 0.3em;
 padding: 20px 20px;
 }
 
-#logo{
-	margin: auto;
-	width: 980px;
-	padding: 10px 10px;
-}
-
-#logoroot{
-	margin: auto;
-	width: 500px;
-	padding: 10px 10px;
-}
-
 #quadroimposto {
 	margin: auto;
 	width: 550px;
@@ -90,25 +78,6 @@ padding: 20px 20px;
 	width: 200px;
 	padding: 0px 10px;
 	font-size: 14pt;
-    	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-}
-
-
-#nav{
-	background-color: #fff;
-	margin: auto;
-	width: 980px;
-	padding: 0px 10px;
-    	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-}
-
-#navroot {
-	background-color: #fff;
-	margin: auto;
-	width: 500px;
-	padding: 0px 10px;
     	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 }
