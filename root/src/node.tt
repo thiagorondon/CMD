@@ -15,7 +15,7 @@ getNode([% node %]);
 <p><a href="javascript:history.go(-1)">Voltar para página anterior</a></p>
 </div>
 [% END %]
-<div id="mainvis" style="width: auto; height: 400px;"> </div>
+<div id="mainvis" style="width: ; height: 400px;"> </div>
 <div id="legenda" class="legenda" style="display:none;visibility:hidden;">Tri = Trilhões, Bi = Bilhões, Mi = Milhões</div>
 <div id="totais"><div class="total"></div></div>
 
