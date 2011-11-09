@@ -59,6 +59,7 @@ sub handle_TREE : Private {
 
     my @children;
     my @zones;
+    my @zones_a;
     my @bgcolor         = bgcolor;
     my $bgcolor_default = '#c51d18';    # in config file ?
 
@@ -68,7 +69,10 @@ sub handle_TREE : Private {
         my $point = $tree->first;
         while ($point) {
             my @parent = $point->parents();
-            push( @zones, $parent[0]->content ) if scalar @parent;
+            if (scalar @parent) {
+              push( @zones_a, { content => $parent[0]->content, id => $parent[0]->id });
+              push( @zones, $parent[0]->content );
+            }
             $point = $point->parent;
         }
 
@@ -131,6 +135,7 @@ sub handle_TREE : Private {
     @zones = reverse(@zones);
     shift(@zones);
     $c->stash->{zones} = join( ', ', @zones ) if @zones;
+    $c->stash->{zones_a} = [reverse @zones_a];
     $c->stash->{children} = [@children];
 
     $c->forward('View::JSON');

@@ -3,16 +3,20 @@
 getNode([% node %]);
 </script>
 
+<div class="carregando">
+<p align="center">Carregando, aguarde.</p>
+</div>
+
 <div id="intro" class="intro">
 </div>
 
 [% IF node %]
-<div class="voltarpagina">
+<div class="voltarpagina" style="display:none;visibility:hidden;">
 <p><a href="javascript:history.go(-1)">Voltar para página anterior</a></p>
 </div>
 [% END %]
 <div id="mainvis" style="width: auto; height: 400px;"> </div>
-<div id="legenda">Tri = Trilhões, Bi = Bilhões, Mi = Milhões</div>
+<div id="legenda" class="legenda" style="display:none;visibility:hidden;">Tri = Trilhões, Bi = Bilhões, Mi = Milhões</div>
 <div id="totais"><div class="total"></div></div>
 
 <br clear="all"/>

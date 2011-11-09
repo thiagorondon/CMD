@@ -1,14 +1,4 @@
 
-body {
-	margin: 0;
-	padding: 0;
-}
-body, tr, td{
-	background-color: #d6cfc2;
-	font-family: "Lucida Grande", Tahoma, Arial;
-	font-size: 10pt;
-}
-
 a, a:visited{
 	color: #996600;
 	text-decoration: none;

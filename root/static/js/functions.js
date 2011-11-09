@@ -8,14 +8,26 @@ function getNode(id) {
 function geturljson(url,year) {
 	last_url = url;
   $('.voltarpagina').hide();
+  $('.carregando').show();
 	$.getJSON(url, function(rdata) {
+    $('.carregando').hide();
 		$('.my-new-list').empty();
   		var data = rdata.data;
 		if (rdata.children != ""){
 			showData(data,rdata,url,year);
+      $('.legenda').show();
 			$('.total').html("Total: R$ " + rdata.total_tree);
 			if (rdata.zones != undefined) {
-				$('.intro').html("<p>" + rdata.zones + "</p>");
+
+        var list = $('.intro').append('<ul class="breadcrumb">').find('ul');
+        for (item in rdata.zones_a) {
+          if (item == rdata.zones_a.length - 1) {
+          list.append('<li class="active">' + rdata.zones_a[item].content + '</li>' + "\n");
+          } else { 
+          list.append('<li><a href="/node/' + rdata.zones_a[item].id +'">' + rdata.zones_a[item].content + '</a> <span class="divider">/</span></li>' + "\n"); 
+          }
+        }
+
         $('.voltarpagina').show();
       } else {
 				$('.intro').html("<p>Esta disposição é baseada na lei de diretrizes orçamentarias e os dados são do portal da transparência, no qual estão apenas os investimentos realizados pelo governo federal. </p>");
