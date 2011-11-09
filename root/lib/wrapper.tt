@@ -57,7 +57,7 @@ _gaq.push(['_trackPageview']);
     <div class="container">
       <ul class="nav">
         <li><a href="#">Visão geral</a></li>
-        <li class="active"><a href="#">Federal</a></li>
+        <li class="active"><a href="/node/1">Federal</a></li>
         <li><a href="#">Estaduais</a></li>
         <li><a href="#">Municipais</a></li>
         <li><a href="#">Favorecidos</a></li>
