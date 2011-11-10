@@ -23,6 +23,11 @@ Catalyst Controller.
 
 sub base : Chained('/base') PathPart('api') CaptureArgs(0) {}
 
+sub root : Chained('base') PathPart('') Args(0) {
+  my ($self, $c) = @_;
+  $c->response->body('api');
+}
+
 =head1 AUTHOR
 
 Thiago Rondon
