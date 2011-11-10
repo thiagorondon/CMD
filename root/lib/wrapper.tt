@@ -69,29 +69,69 @@ _gaq.push(['_trackPageview']);
 
 <div class="container">
 
-<div class="content">
-	<div class="page-header">
+	<div class="content">
+		<div class="page-header">
 
-		<div class="row">
-			<div class="span14">
-				<img src="[% c.uri_for('/static/images/logo-pofomd.png') %]" border="0" />
-			</div>
+			<div class="row">
+				<div class="span14">
+					<img src="[% c.uri_for('/static/images/logo-pofomd.png') %]" border="0" />
+				</div>
 
-			<div class="span2">
-				<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.paraondefoiomeudinheiro.com.br/year/2010" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-				<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.paraondefoimeudinheiro.com.br&amp;send=false&amp;layout=button_count&amp;width=85&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=tahoma&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:85px; height:21px;" allowTransparency="true"></iframe>
+				<div class="span2">
+					<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.paraondefoiomeudinheiro.com.br/year/2010" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+					<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.paraondefoimeudinheiro.com.br&amp;send=false&amp;layout=button_count&amp;width=85&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=tahoma&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:85px; height:21px;" allowTransparency="true"></iframe>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="span16">
-			[% content %]
+		<div class="row">
+			<div class="span16">
+				[% content %]
+			</div>
 		</div>
 	</div>
 </div>
 
-<footer>
-<p>Criado por <a href="http://www.opendatabr.org/">OpenData-BR</a></p>
+<br />
+<footer class="footer"> <div class="malha">
+	<div class="container margem"> [%# aqui diz que vai ter o conteudo centralizado %]
+		<div class="row"> [%# aqui faz quebrar por "linhas" (adiciona -20px no left) %]
+
+			<div class="span4"> [%# e aqui faz uma coluna de 4x, cabem 16x por "row" %]
+				<h4>Estados</h4>
+				<ul>
+					<li><a href="#">Rio de Janeiro</a></li>
+					<li><a href="#">São Paulo</a></li>
+				</ul>
+				
+			</div>
+
+			<div class="span4">
+
+				<p>Criado por <a href="http://www.opendatabr.org/">OpenData-BR</a></p>
+				<a href="http://www.opendefinition.org/okd/">
+					<img src="http://assets.okfn.org/images/ok_buttons/od_80x15_blue.png" alt="Open Data">
+				</a>
+			</div>
+
+			<div class="span4">
+				<p><a href="#">voltar ao topo</a></p>
+			</div>
+
+
+			<div class="span4">
+				<ul>
+					<li><a href="/todo">todo</a></li>
+					<li><a href="/faq">FAQ</a></li>
+					<li><a href="/contato">contato</a></li>
+				</ul>
+			</div>
+
+
+
+		</div>
+	</div>
+
+</div>
 </footer>
 
 </body>
