@@ -17,8 +17,8 @@ function geturljson(url,year) {
 			showData(data,rdata,url,year);
       $('.legenda').show();
 			$('.total').html("Total: R$ " + rdata.total_tree);
-			if (rdata.zones != undefined) {
-
+			//if (rdata.zones != undefined) {
+      if (1) {
         var list = $('.intro').append('<ul class="breadcrumb">').find('ul');
         for (item in rdata.zones_a) {
           if (item == rdata.zones_a.length - 1) {
