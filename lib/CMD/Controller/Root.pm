@@ -39,7 +39,7 @@ sub base : Chained('/') PathPart('') CaptureArgs(0) {
 sub root : Chained('base') PathPart('') Args(0) {
     my ( $self, $c ) = @_;
     $c->stash->{bases} = $c->model('DB::Base');
-    $c->res->redirect('/node/1');
+    $c->res->redirect('/node/170227');
 }
 
 sub faq : Chained('base') Args(0) {
