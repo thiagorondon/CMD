@@ -7,3 +7,5 @@ blib
 .*
 !.shipit
 .gitignore
+db_config.json
+
