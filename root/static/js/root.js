@@ -5,27 +5,38 @@ function redirect2node() {
 	}
 }
 
-function populate_periodo(url, active_content) {
-	$.getJSON(url, function(ret) {
-		data = ret.data;
-		var options = '<option value=""></option>';
-		for (var i = 0; i < data.length; i++) {
-			options += '<option value="' + data[i].value + '"';
-			if (active_content == data[i].display) {
-				options += " SELECTED"
-			}
-			options += '>' + data[i].display + '</option>';
-		}
-		$("select#node").html(options);
-	});
-}
-
-function base2nodes() {
-        if ($('#base').val()) {
-		var url = '/data/base2nodes/' + $('#base').val();
-		$('#periodo').hide();
-		populate_periodo(url);
-		$('#periodo').show();
+!function( $ ){
+	
+	"use strict"
+	
+	/* DROPDOWN PLUGIN DEFINITION
+	* ========================== */
+	
+	$.fn.dropdown = function ( selector ) {
+		return this.each(function () {
+			$(this).delegate(selector || d, 'click', function (e) {
+				var li = $(this).parent('li')
+				, isActive = li.hasClass('open')
+				
+				clearMenus()
+				!isActive && li.toggleClass('open')
+				return false
+			})
+		})
 	}
-}
-
+	
+	/* APPLY TO STANDARD DROPDOWN ELEMENTS
+	* =================================== */
+	
+	var d = 'a.menu, .dropdown-toggle'
+	
+	function clearMenus() {
+		$(d).parent('li').removeClass('open')
+	}
+	
+	$(function () {
+		$('html').bind("click", clearMenus)
+		$('body').dropdown( '[data-dropdown] a.menu, [data-dropdown] .dropdown-toggle' )
+	})
+	
+}( window.jQuery || window.ender );

@@ -56,15 +56,40 @@ _gaq.push(['_trackPageview']);
   <div class="fill">
     <div class="container">
       <ul class="nav">
-        <li><a href="#">Visão geral</a></li>
-        <li class="active"><a href="/node/1">Federal</a></li>
-        <li><a href="#">Estaduais</a></li>
-        <li><a href="#">Municipais</a></li>
-        <li><a href="#">Favorecidos</a></li>
-        <li><a href="#">Programas</a></li>
       </ul>
     </div>
   </div>
+</div>
+
+<div class="topbar" data-dropdown="dropdown">
+	<div class="topbar-inner">
+		<div class="container-fluid">
+			<a class="brand" href="http://opendatabr.org/" target="_blank">opendata-br</a>
+			<ul class="nav">
+				<li><a href="/">Home</a></li>
+				<li><a href="/faq">FAQ</a></li>
+
+				<li style="margin-left:100px" class="dropdown">
+					<a href="#" class="dropdown-toggle">Federal</a>
+					<ul class="dropdown-menu">
+						<li><a href="/node/1">2010</a></li>
+						<li><a href="/node/170775">2009</a></li>
+						<li><a href="/node/336532">2008</a></li>
+						<li><a href="/node/514165">2007</a></li>
+						<li><a href="/node/692746">2006</a></li>
+						<li><a href="/node/871115">2005</a></li>
+					</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">Estadual</a>
+					<ul class="dropdown-menu">
+						<li><a href="/node/170227">São Paulo 2011</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
 </div>
 
 <div class="container">
@@ -96,36 +121,48 @@ _gaq.push(['_trackPageview']);
 	<div class="container margem"> [%# aqui diz que vai ter o conteudo centralizado %]
 		<div class="row"> [%# aqui faz quebrar por "linhas" (adiciona -20px no left) %]
 
-			<div class="span4"> [%# e aqui faz uma coluna de 4x, cabem 16x por "row" %]
-				<h4>Estados</h4>
+			<div class="span3"> [%# e aqui faz uma coluna de 4x, cabem 16x por "row" %]
+				<p>Desenvolvido por</p>
 				<ul>
-					<li><a href="#">Rio de Janeiro</a></li>
-					<li><a href="#">São Paulo</a></li>
+					<li><a href="http://sao-paulo.pm.org" target="_blank"> São Paulo Perl Mongers</a></li>
+					<li><a href="http://www.opendatabr.org/" target="_blank">opendata-br</a></li>
 				</ul>
-				
-			</div>
-
-			<div class="span4">
-
-				<p>Criado por <a href="http://www.opendatabr.org/">OpenData-BR</a></p>
-				<a href="http://www.opendefinition.org/okd/">
-					<img src="http://assets.okfn.org/images/ok_buttons/od_80x15_blue.png" alt="Open Data">
-				</a>
-			</div>
-
-			<div class="span4">
-				<p><a href="#">voltar ao topo</a></p>
 			</div>
 
 
-			<div class="span4">
+			<div class="span2">
+				<p>Federal</p>
 				<ul>
-					<li><a href="/todo">todo</a></li>
+					<li><a href="/node/1">2010</a> - <a href="/node/692746">2006</a> </li>
+					<li><a href="/node/170775">2009</a> - <a href="/node/514165">2007</a></li>
+					<li><a href="/node/336532">2008</a> - <a href="/node/871115">2005</a></li>
+				</ul>
+			</div>
+			<div class="span3">
+				<p>Estadual</p>
+				<ul>
+					<li><a href="/node/170227">São Paulo 2011</a></li>
+				</ul>
+			</div>
+
+			<div class="span4">
+				<p>Para onde foi o meu dinheiro ?</p>
+				<ul>
 					<li><a href="/faq">FAQ</a></li>
-					<li><a href="/contato">contato</a></li>
+					<li><a href="/todo">TODO</a></li>
+					<li><a href="/contato">Contato</a></li>
 				</ul>
 			</div>
 
+			<div class="span4">
+			<p>
+				<a href="http://www.opendefinition.org/okd/">
+					<img src="http://assets.okfn.org/images/ok_buttons/od_80x15_blue.png" alt="OpenData">
+				</a>
+				</p><p>
+					<a rel="license" href="http://creativecommons.org/licenses/by/3.0/br/"><img alt="Licença Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by/3.0/br/80x15.png"></a><br>este trabalho está sobre a licença <a rel="license" href="http://creativecommons.org/licenses/by/3.0/br/">Creative Commons Atribuição 3.0</a>
+				</p>
+			</div>
 
 
 		</div>
