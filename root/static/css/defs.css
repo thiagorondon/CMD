@@ -89,3 +89,8 @@ border: 0;
 	color: #F89406;
 
 }
+
+.topbar h3 a, .topbar .brand {
+    background: url("/static/images/opendatabr.20.png") no-repeat scroll 0 8px transparent;
+    margin-left: 20px;
+}
