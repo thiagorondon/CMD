@@ -20,9 +20,9 @@ if ( ! $config ) {
 }
 
 my $schema = CMD::Schema->connect(
-    $config->[0]{ 'db_config.json' }->{ db_config }->{ dsn }, 
-    $config->[0]{ 'db_config.json' }->{ db_config }->{ user },
-    $config->[0]{ 'db_config.json' }->{ db_config }->{ password }, 
+    $config->[0]{ "$Bin/../db_config.json" }->{ db_config }->{ dsn }, 
+    $config->[0]{ "$Bin/../db_config.json" }->{ db_config }->{ user },
+    $config->[0]{ "$Bin/../db_config.json" }->{ db_config }->{ password }, 
 );
 my $rs = $schema->resultset('Node');
 my $rs_cidade = $schema->resultset('Cidade');
