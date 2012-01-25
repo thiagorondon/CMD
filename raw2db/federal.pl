@@ -12,6 +12,9 @@ use CMD::Data::Migrate;
 use Data::Dumper;
 use Config::Any;
 
+use constant LINES => 10000;
+use constant COD_MUNICIPIO_EXTERIOR => 20000;
+
 my $config = Config::Any->load_files( { files => [ "$Bin/../db_config.json" ], use_ext => 5 } );
 if ( ! $config ) {
     warn "Arquivo de configuracao 'db_config.json' nao encontrado.";
@@ -65,7 +68,8 @@ sub main {
     });
 
     my $root = $rs->create( { content => $year, valor => 0, cidade_codigo => 0 } );
-    $migrate->hash_to_db( $root, \%tree );
+    my $hash_count = $migrate->hash_to_db( $root, \%tree );
+    warn 'hash_to_db, count = '.$hash_count;
 
     my $base = $rs_base->update_or_create({
        nome => 'Governo Federal' 
@@ -81,13 +85,26 @@ sub process_data_transferencia {
     my ($fh, $treeref) = @_;
     my %tree = %$treeref;
     my $header = 0;
+    my $counter = 0;
     while ( my $row = <$fh> ) {
-        $header++ and next unless $header;
+        if(! $header) {
+            $header++;
+            next;
+        }
         my @cols = split( /\;/, $row );
         map { $_ =~ s/\"//g; } @cols;
         my $valor = $cols[12];
         next unless $valor;
         my ($estado, $codmunicipio, $municipio, $codfuncao, $funcao, $codsubfuncao, $subfuncao, $codprograma, $programa) = @cols;
+
+        $counter++;
+        if($counter % LINES == 0) { warn "process_data_transferencia: count = ".$counter; }
+
+        if(! looks_like_number($codmunicipio)) {
+            warn 'does not look like number: transf/$codmunicipio = "'.$codmunicipio.'" -> '.COD_MUNICIPIO_EXTERIOR;
+            $codmunicipio = COD_MUNICIPIO_EXTERIOR; # "Ext_" - Exterior
+            #next;
+        }
 
         $valor = fix_valor($valor);
 
@@ -103,6 +120,7 @@ sub process_data_transferencia {
         $tree{$funcao}{$subfuncao}{'repasse'}{$estado}{$municipio}{$programa} =
 "$last_valor-$codprograma-$codsubfuncao-$codfuncao-$estado-$codmunicipio-$municipio";
     }
+    warn "process_data_transferencia:fim count = ".$counter;
     return %tree;
 }
 
@@ -110,8 +128,12 @@ sub process_data_direta {
     my $fh = shift;
     my %tree;
     my $header = 0;
+    my $counter = 0;
     while ( my $row = <$fh> ) {
-        $header++ and next unless $header;
+        if(! $header) {
+            $header++;
+            next;
+        }
         my @cols         = split( /\;/, $row );
         my $valor        = $cols[17];
         my $codfuncao    = $cols[8];
@@ -121,7 +143,6 @@ sub process_data_direta {
         my $codprograma  = $cols[12];
         my $programa     = $cols[13];
         $valor = fix_valor($valor);
-
 
         if (!defined($tree{$funcao}{$subfuncao}{$programa})) {
             $tree{$funcao}{$subfuncao}{$programa} = "0-";
@@ -134,7 +155,10 @@ sub process_data_direta {
         $tree{$funcao}{$subfuncao}{$programa} =
           "$last_valor-$codprograma-$codsubfuncao-$codfuncao";
 
+        $counter++;
+        if($counter % LINES == 0) { warn "process_data_direta: count = ".$counter; }
     }
+    warn "process_data_direta:fim count = ".$counter;
     return %tree;
 }
 
