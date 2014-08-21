@@ -5,6 +5,8 @@ use utf8;
 use Moose;
 use Scalar::Util qw(looks_like_number);
 
+use constant LINES => 10000;
+
 has rs => (
     is        => 'rw',
     isa       => 'Object',
@@ -22,6 +24,8 @@ has year => (
     isa => 'Int'
 );
 
+my $counter = 0;
+
 sub hash_to_db () {
     my ( $self, $root, $treeref ) = @_;
     my %tree = %$treeref;
@@ -32,6 +36,10 @@ sub hash_to_db () {
         my $valor = $tree{$item};
         next if $item eq 'total';
         next if $item eq 'NomeFuncao';    # Hm ?
+
+        $counter++;
+        if($counter % LINES == 0) { warn "hash_to_db: count = ".$counter.' [localtime = '.localtime().']'; }
+
         if ( ref($valor) eq 'HASH' ) {
             my $total = $tree{$item}{total} || 0;
             my $node = $self->rs->create(
@@ -44,7 +52,7 @@ sub hash_to_db () {
                 $codmunicipio, $municipio )
               = split( '-', $valor );
     
-            warn $valor_parcial if $valor_parcial;
+            #warn $valor_parcial if $valor_parcial;
 
             $self->rs_cidade->update_or_create({
                 codigo => $codmunicipio,
@@ -56,7 +64,7 @@ sub hash_to_db () {
             $self->rs->create(
                 {
                     content       => $item,
-                    valor         => $valor,
+                    valor         => $valor_parcial,
                     codigo        => $codigo,
                     subfuncao     => $subfuncao,
                     funcao        => $funcao,
@@ -69,6 +77,7 @@ sub hash_to_db () {
         }
 
     }
+    return $counter;
 }
 
 sub proccess_values {

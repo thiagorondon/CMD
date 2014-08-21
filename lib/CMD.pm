@@ -73,7 +73,12 @@ sub is_db_configured {
         __PACKAGE__->config->{ db_config }->{ user },
         __PACKAGE__->config->{ db_config }->{ password },
     );
+
     my $database = eval { $schema->resultset( 'Node' )->search()->first; };
+    if(! $schema->storage->connected) {
+        warn "NÂO CONECTADO. verificar se banco está no ar ou o arquivo db_config.json\n";
+        exit 1;
+    }
     if ( ! $database ) {
         if ( defined __PACKAGE__->config->{ db_config }->{ user }
          and defined __PACKAGE__->config->{ db_config }->{ password }
